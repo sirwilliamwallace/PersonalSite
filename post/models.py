@@ -10,3 +10,6 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     isActive = models.BooleanField(default=False)
     content = models.TextField()
+
+    def __str__(self):
+        return self.title
