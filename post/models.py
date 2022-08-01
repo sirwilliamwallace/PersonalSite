@@ -20,7 +20,7 @@ def upload_image_path(instance, filename):
 class Post(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField()
-    author = models.OneToOneField()
+    author = models.OneToOneField() #TODO: inherit user table
     description = models.CharField(max_length=300)
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
     date = models.DateTimeField(auto_now=True)
