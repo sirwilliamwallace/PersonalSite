@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('posts/', include('post.urls')),
 ]
 if settings.DEBUG:
     # add root static files
