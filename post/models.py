@@ -9,13 +9,17 @@ User = get_user_model()
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=150)
-    slug = models.SlugField(default="", null=False, db_index=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    title = models.CharField(max_length=300, unique=True)
+    slug = models.SlugField(max_length=300, default="", null=False, db_index=True, unique=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     description = models.CharField(max_length=300)
-    date = models.DateTimeField(auto_now=True)
-    isActive = models.BooleanField(default=False)
     content = RichTextUploadingField()
+    createDate = models.DateTimeField(auto_now_add=True)
+    updateDate = models.DateTimeField(auto_now=True)
+    isActive = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[
@@ -25,3 +29,6 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-created_at']
