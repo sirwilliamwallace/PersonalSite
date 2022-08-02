@@ -11,7 +11,7 @@ User = get_user_model()
 class Post(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(default="", null=False, db_index=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     description = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now=True)
     isActive = models.BooleanField(default=False)
