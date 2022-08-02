@@ -8,6 +8,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ['title']
     }
-    list_display = ('title', 'author', 'date', 'isActive',)
+    list_display = ('title', 'author', 'isActive',)
+    list_filter = ('author', 'createDate', 'updateDate', 'isActive',)
+    search_fields = ('title', 'description', 'content',)
     list_editable = ('isActive',)
-    list_filter = ('author', 'date', 'isActive',)
