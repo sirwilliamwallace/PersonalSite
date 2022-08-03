@@ -32,3 +32,19 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-createDate']
+
+
+
+
+class PostCategory(models.Model):
+    title = models.CharField(max_length=300, db_index=True, verbose_name='Title')
+    url_title = models.CharField(max_length=300, db_index=True, verbose_name='Url Title')
+    isActive = models.BooleanField(default=False, verbose_name='Active / Inactive')
+    isDelete = models.BooleanField(verbose_name='Deleted')
+
+    def __str__(self):
+        return f"( {self.title} - {self.url_title} )"
+
+    class Meta:
+        verbose_name = 'Post Category'
+        verbose_name_plural = "Post Categories"
