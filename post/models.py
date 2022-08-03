@@ -34,6 +34,16 @@ class Post(models.Model):
         ordering = ['-createDate']
 
 
+class PostTag(models.Model):
+    caption = models.CharField(max_length=300, db_index=True, verbose_name='Caption')
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='post_tags', verbose_name='Post')
+
+    class Meta:
+        verbose_name = "Post's tag"
+        verbose_name_plural = "Post's tag"
+
+    def __str__(self):
+        return self.caption
 
 
 class PostCategory(models.Model):
