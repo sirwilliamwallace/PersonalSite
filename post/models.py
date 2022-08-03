@@ -9,14 +9,17 @@ User = get_user_model()
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=300, unique=True)
-    slug = models.SlugField(max_length=300, default="", null=False, db_index=True, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
-    description = models.CharField(max_length=300)
-    content = RichTextUploadingField()
-    createDate = models.DateTimeField(auto_now_add=True)
-    updateDate = models.DateTimeField(auto_now=True)
-    isActive = models.BooleanField(default=False)
+    title = models.CharField(max_length=300, unique=True, verbose_name='Title')
+    category = models.ManyToManyField('PostCategory', related_name='post_categories', verbose_name='Categories')
+    slug = models.SlugField(max_length=300, default="", null=False, db_index=True, unique=True,
+                            verbose_name='Slug (Auto-complete)')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', verbose_name='Author')
+    description = models.CharField(max_length=300, verbose_name='Short Description')
+    content = RichTextUploadingField(verbose_name='Content')
+    createDate = models.DateTimeField(auto_now_add=True, verbose_name='Created Date')
+    updateDate = models.DateTimeField(auto_now=True, verbose_name='Updated Date')
+    isActive = models.BooleanField(default=False, verbose_name='Active / Inactive')
+    isDelete = models.BooleanField(verbose_name='Deleted')
 
     def __str__(self):
         return self.title
@@ -53,7 +56,7 @@ class PostCategory(models.Model):
     isDelete = models.BooleanField(verbose_name='Deleted')
 
     def __str__(self):
-        return f"( {self.title} - {self.url_title} )"
+        return f"{self.title} - {self.url_title}"
 
     class Meta:
         verbose_name = 'Post Category'
