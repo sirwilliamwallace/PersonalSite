@@ -14,32 +14,34 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class="django-email-form">
-                          {% csrf_token %}
+                      <form action="#contact" method="post" role="form" class=django-email-form">
+                        {% csrf_token %}
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                                {{ contact_form.name }}
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                                {{ contact_form.email }}
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                                {{ contact_form.subject }}
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-group">
-                              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                                {{ contact_form.message }}
                             </div>
                           </div>
                           <div class="col-md-12 text-center my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
+                            <div class="error-message">{{ contact_form.errors }}</div>
+
+
+                              {#TODO: succes message #}
                             <div class="sent-message">Your message has been sent. Thank you!</div>
                           </div>
                           <div class="col-md-12 text-center">
