@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from .forms import ContactForm
 
 
 def contact_form(request):
+    contactForm = ContactForm(request.POST or None)
     if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-        # print(f"{name} - {message} - {email} - {subject} - {message}")
-        return redirect(reverse('home:index_page'))
-    return render(request, 'contact/contact.html', {})
+        if contactForm.is_valid():
+            print(contactForm.cleaned_data)
+            contactForm = ContactForm()
+            return render(request, 'contact/contact.html', {"contact_form": contactForm})
+    return render(request, 'contact/contact.html', {"contact_form": contactForm})
