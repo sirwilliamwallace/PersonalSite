@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('posts/', include('post.urls')),
     path('', include('home.urls')),
-
+    path('contact-me/', include('contact.urls')),
     # django and third-party app urls
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
