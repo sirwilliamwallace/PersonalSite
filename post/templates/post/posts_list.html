@@ -1,0 +1,48 @@
+{% load static %}
+    <section id="blog" class="blog-mf sect-pt4 route">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="title-box text-center">
+              <h3 class="title-a">
+                Blog
+              </h3>
+              <p class="subtitle-a">
+                {{ short_description }}
+{#                  TODO: add fonts#}
+              </p>
+              <div class="line-mf"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            {% for post in posts %}
+                      <div class="col-md-4">
+            <div class="card card-blog">
+              <div class="card-img">
+                <a href="blog-single.html"><img src="{% static 'assets/img/post-1.jpg' %}" alt="" class="img-fluid"></a>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title"><a href="blog-single.html">{{ post.title  }}</a></h3>
+                <p class="card-description">
+                  {{ post.description|truncatewords:10 }}
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="post-author">
+                  <a href="#">
+                    <img src="{% static 'assets/img/testimonial-2.jpg' %}" alt="" class="avatar rounded-circle">
+                    <span class="author">{{ post.author }}</span>
+                  </a>
+                </div>
+                <div class="post-date">
+                  <span class="bi bi-clock"></span> {{ post.updateDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+            {% endfor %}
+        </div>
+      </div>
+    </section>
