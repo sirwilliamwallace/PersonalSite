@@ -14,7 +14,8 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                      <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class="django-email-form">
+                          {% csrf_token %}
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
