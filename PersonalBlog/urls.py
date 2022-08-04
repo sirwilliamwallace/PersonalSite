@@ -20,8 +20,10 @@ from django.urls import path, include
 
 urlpatterns = [
     # apps urls
+
     path('posts/', include('post.urls')),
     path('', include('home.urls')),
+
     # django and third-party app urls
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
