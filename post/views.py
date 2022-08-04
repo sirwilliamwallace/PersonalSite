@@ -5,13 +5,12 @@ from . import models
 # TODO: transfer the templates
 
 def posts_list(request):
-    posts = models.Post.objects.all()
-    posts_count = posts.count()
+    posts = models.Post.objects.all().order_by('-updateDate')[:3]
     context = {
+        "short_description": "Learning",
         "posts": posts,
-        "posts_count": posts_count,
     }
-    return render(request, '', context)
+    return render(request, 'post/posts_list.html', context)
 
 
 def post_detail(request, post_id, slug):
@@ -19,4 +18,4 @@ def post_detail(request, post_id, slug):
     context = {
         "post": post,
     }
-    return render(request, '', context)
+    return render(request, 'post/posts_detail.html', context)
