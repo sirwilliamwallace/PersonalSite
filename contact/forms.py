@@ -1,6 +1,7 @@
 from django import forms
 from contact.models import ContactModel
 
+
 class ContactUsModelForm(forms.ModelForm):
     class Meta:
         model = ContactModel
@@ -40,5 +41,3 @@ class ContactUsModelForm(forms.ModelForm):
             "title": "Subject",
             "message": "Your Message",
         }
-
-
