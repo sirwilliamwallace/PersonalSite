@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import ContactForm, ContactUsModelForm
+from django.views.generic import View
+from .forms import ContactUsModelForm
 
 
-def contact_form(request):
-    # contactForm = ContactForm(request.POST or None)
-    contactForm = ContactUsModelForm(request.POST or None)
-    if request.method == "POST":
+class ContactFormView(View):
+    def get(self, request):
+        contactForm = ContactUsModelForm()
+        return render(request, 'contact/contact.html', {"contact_form": contactForm})
+
+    def post(self, request):
+        contactForm = ContactUsModelForm(request.POST)
         if contactForm.is_valid():
-            print(contactForm.cleaned_data)
             contactForm.save()
-            # contactForm = ContactForm()
             contactForm = ContactUsModelForm()
             return render(request, 'contact/contact.html', {"contact_form": contactForm})
-    return render(request, 'contact/contact.html', {"contact_form": contactForm})
+
