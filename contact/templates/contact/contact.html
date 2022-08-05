@@ -14,7 +14,7 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class=django-email-form">
+                      <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class="php-form-control">
                         {% csrf_token %}
                         <div class="row">
                             {% for field in contact_form %}
