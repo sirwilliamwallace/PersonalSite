@@ -13,15 +13,3 @@ class ContactFormView(FormView):
     def form_valid(self, form):
         form.save()
         return super(ContactFormView, self).form_valid(form)
-
-# class ContactFormView(View):
-#     def get(self, request):
-#         contactForm = ContactUsModelForm()
-#         return render(request, 'contact/contact.html', {"contact_form": contactForm})
-#
-#     def post(self, request):
-#         contactForm = ContactUsModelForm(request.POST)
-#         if contactForm.is_valid():
-#             contactForm.save()
-#             contactForm = ContactUsModelForm()
-#             return redirect('home:contact-form-view')
