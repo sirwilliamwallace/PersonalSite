@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from . import models
 
 
@@ -13,14 +13,13 @@ class PostsListView(ListView):
         return query_set.filter(isActive=True).order_by('-createDate')
 
 
+class PostDetailView(DetailView):
+    template_name = 'post/posts_detail.html'
+    model = models.Post
 
-def post_detail(request, post_id, slug):
-    latest_posts = models.Post.objects.all().order_by('-createDate')[:5]
-    post = get_object_or_404(models.Post, id=post_id, slug=slug)
-    categories = models.Post.objects.filter(category__post_categories__title__icontains=post.title)
-    context = {
-        "post": post,
-        "latest_posts": latest_posts,
-        "categories": categories,
-    }
-    return render(request, 'post/posts_detail.html', context)
+    def get_context_data(self, **kwargs):
+        query_set = super(PostDetailView, self).get_context_data()
+        query_set['latest_posts'] = models.Post.objects.all().order_by('-createDate')[:5]
+        # query_set['categories'] = models.Post.objects.filter(category__post_categories__title__icontains=)
+        # print(category)
+        return query_set
