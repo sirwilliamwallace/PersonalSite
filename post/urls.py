@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'post'
 urlpatterns = [
-    path('<int:post_id>/<slug:slug>', views.post_detail, name='post-detail'),
+    path('<int:post_id>/<slug:slug>', views.PostDetailView.as_view() , name='post-detail'),
 ]
