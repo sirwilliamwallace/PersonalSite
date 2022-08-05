@@ -20,6 +20,4 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         query_set = super(PostDetailView, self).get_context_data()
         query_set['latest_posts'] = models.Post.objects.all().order_by('-createDate')[:5]
-        # query_set['categories'] = models.Post.objects.filter(category__post_categories__title__icontains=)
-        # print(category)
         return query_set
