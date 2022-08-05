@@ -5,14 +5,14 @@
 
 {% block title %}Home Page{% endblock %}
 {% block content %}
-   {% render_partial 'home.views.hero_component' %}
+   {% render_partial 'home.views.HeroComponentView' %}
   <main id="main">
     <!-- ======= About Section ======= -->
-      {% render_partial 'home.views.about_page' %}
+      {% render_partial 'home.views.AboutPartialView' %}
     <!-- End About Section -->
 
     <!-- ======= Services Section ======= -->
-    {% render_partial 'home.views.services_page' %}
+    {% render_partial 'home.views.ServicesPartialView' %}
     <!-- End Services Section -->
 
     <!-- ======= Counter Section ======= -->
@@ -70,7 +70,7 @@
       <!-- End Counter Section -->
 
     <!-- ======= Portfolio Section ======= -->
-    {% render_partial 'home.views.portfolio' %}
+    {% render_partial 'home.views.PortfolioPartialView' %}
     <!-- End Portfolio Section -->
     <!-- ======= Testimonials Section ======= -->
     <div class="testimonials paralax-mf bg-image" style="background-image: url({% static 'assets/img/overlay-bg.jpg' %})">
@@ -128,8 +128,7 @@
     {% render_partial 'post.views.posts_list' %}
     <!-- End Blog Section -->
     <!-- ======= Contact Section ======= -->
-    {% render_partial 'contact.views.ContactFormView' %}
-{#      {% include 'contact/contact.html' %}#}
+      {% render_partial 'contact.views.ContactFormView' %}
     <!-- End Contact Section -->
 
 
