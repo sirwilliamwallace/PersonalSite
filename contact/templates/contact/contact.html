@@ -10,11 +10,11 @@
                   <div class="col-md-6">
                     <div class="title-box-2">
                       <h5 class="title-left">
-                        Send Message Us
+                        Contact
                       </h5>
                     </div>
                     <div>
-                      <form action="#contact" method="post" role="form" class=django-email-form">
+                      <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class=django-email-form">
                         {% csrf_token %}
                         <div class="row">
                             {% for field in contact_form %}
