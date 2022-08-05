@@ -17,15 +17,15 @@
                 <ul>
                   <li>
                     <span class="bi bi-person"></span>
-                    <a href="#">{{ post.author }}</a>
+                    <a>{{ post.author }}</a>
                   </li>
                   <li>
                     <span class="bi bi-tag"></span>
-                    <a href="#">{{ post.post_tags.first }}</a>
+                    <a>{{ post.post_tags.first }}</a>
                   </li>
                   <li>
                     <span class="bi bi-chat-left-text"></span>
-                    <a href="#">14</a>
+                    <a>14</a>
                   </li>
                     <br>
                     <li>
@@ -182,9 +182,9 @@
               <h5 class="sidebar-title">Categories</h5>
               <div class="sidebar-content">
                 <ul>
-                    {% for category in categories %}
+                    {% for category in post.category.all %}
                   <li>
-                    <a href="#">{{ category.title }}</a>
+                    <a class="category color-text-a">{{ category.title }}</a>
                   </li>
                     {% endfor %}
 
