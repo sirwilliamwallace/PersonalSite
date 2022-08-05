@@ -17,12 +17,12 @@
                       <form action="{% url 'contact-me:contact-form' %}" method="post" role="form" class="php-form-control">
                         {% csrf_token %}
                         <div class="row">
-                            {% for field in contact_form %}
+                            {% for field in form %}
                                 {{ field }}
                                 {{ field.errors }}
                             {% endfor %}
                           <div class="col-md-12 text-center my-3">
-                            <div class="error-message">{{ contact_form.errors }}</div>
+                            <div class="error-message">{{ form.errors }}</div>
 
 
                               {#TODO: succes message #}
