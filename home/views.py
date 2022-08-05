@@ -7,29 +7,26 @@ from post.models import Post
 class HomePageView(TemplateView):
     template_name = 'home/index.html'
 
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+
+class AboutPartialView(TemplateView):
+    template_name = 'home/about.html'
 
 
-def about_page(request):
-    return render(request, 'home/about.html', {})
+class ServicesPartialView(TemplateView):
+    template_name = 'home/services.html'
 
 
-def services_page(request):
-    return render(request, 'home/services.html', {})
+class PortfolioPartialView(TemplateView):
+    template_name = 'home/portfolio.html'
 
 
-def portfolio(request):
-    return render(request, 'home/portfolio.html', {})
+class HeaderComponentView(TemplateView):
+    template_name = 'main/components/header_component.html'
 
 
-def header_component(request):
-    return render(request, 'main/components/header_component.html', {})
+class FooterComponentView(TemplateView):
+    template_name = 'main/components/footer_component.html'
 
 
-def footer_component(request):
-    return render(request, 'main/components/footer_component.html', {})
-
-
-def hero_component(request):
-    return render(request, 'main/components/hero_component.html', {})
+class HeroComponentView(TemplateView):
+    template_name = 'main/components/hero_component.html'
