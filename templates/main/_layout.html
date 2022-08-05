@@ -13,9 +13,9 @@
   {% include 'main/includes/header_references.html' %}
 </head>
 <body>
-{% block header_references %}{% render_partial 'home.views.header_component' %}{% endblock header_references %}
+{% block header_references %}{% render_partial 'home.views.HeaderComponentView' %}{% endblock header_references %}
 {% block content %}{% endblock content%}
-{% block footer_components %}{% render_partial 'home.views.footer_component' %}{% endblock footer_components %}
+{% block footer_components %}{% render_partial 'home.views.FooterComponentView' %}{% endblock footer_components %}
 {% block footer_references %}{% include 'main/includes/footer_refrences.html' %}{% endblock %}
 </body>
 </html>
