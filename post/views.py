@@ -1,18 +1,17 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
 from . import models
 
 
-# TODO: transfer the templates
+class PostsListView(ListView):
+    template_name = 'post/posts_list.html'
+    model = models.Post
+    context_object_name = 'posts'
 
-def posts_list(request):
-    posts = models.Post.objects.all().order_by('-createDate')
-    # for post in posts:
-    #     print(post.createDate.minute)
-    context = {
-        "short_description": "Learning",
-        "posts": posts,
-    }
-    return render(request, 'post/posts_list.html', context)
+    def get_queryset(self):
+        query_set = super(PostsListView, self).get_queryset()
+        return query_set.filter(isActive=True).order_by('-createDate')
+
 
 
 def post_detail(request, post_id, slug):
