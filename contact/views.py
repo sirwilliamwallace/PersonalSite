@@ -14,5 +14,6 @@ class ContactFormView(View):
         if contactForm.is_valid():
             contactForm.save()
             contactForm = ContactUsModelForm()
-            return render(request, 'contact/contact.html', {"contact_form": contactForm})
+            return redirect('home:contact-form-view')
+
 
