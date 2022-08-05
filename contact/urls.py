@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'contact-me'
 urlpatterns = [
-    path('', views.contact_form, name="contact-form"),
+    path('', views.ContactFormView.as_view(), name="contact-form"),
 ]
