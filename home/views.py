@@ -1,11 +1,14 @@
 from django.shortcuts import render
-
+from django.views.generic.base import TemplateView
 # Create your views here.
 from post.models import Post
 
 
-def index_page(request):
-    return render(request, 'home/index.html', {})
+class HomePageView(TemplateView):
+    template_name = 'home/index.html'
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
 
 
 def about_page(request):
