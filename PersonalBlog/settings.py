@@ -103,6 +103,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+# FILES
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -141,4 +147,7 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Advanced',
     },
+    'contact_message': {
+        'toolbar': 'Basic'
+    }
 }
