@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 
-from .models import Hero, SiteSettings
+from .models import Hero, SiteSettings, Profile
 
 
 # Create your views here.
@@ -17,6 +17,13 @@ class HomePageView(TemplateView):
 
 class AboutPartialView(TemplateView):
     template_name = 'home/about.html'
+
+    def get_context_data(self, **kwargs):
+        profile = Profile.objects.all().first()
+        base = super(AboutPartialView, self).get_context_data()
+        base['profile'] = profile
+        base['hero_skills'] = Hero.objects.all().first()
+        return base
 
 
 class ServicesPartialView(TemplateView):
