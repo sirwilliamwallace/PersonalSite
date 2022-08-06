@@ -1,12 +1,18 @@
 from django.views.generic.base import TemplateView
-from .models import Hero
-from post.models import Post
-from django.contrib.auth import get_user_model
+
+from .models import Hero, SiteSettings
+
+
 # Create your views here.
 
 
 class HomePageView(TemplateView):
     template_name = 'home/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data()
+        context['settings'] = SiteSettings.objects.all().first()
+        return context
 
 
 class AboutPartialView(TemplateView):
@@ -15,10 +21,21 @@ class AboutPartialView(TemplateView):
 
 class ServicesPartialView(TemplateView):
     template_name = 'home/services.html'
+    hero = Hero.objects.all().first()
+
+    def get_context_data(self, **kwargs):
+        base = super(ServicesPartialView, self).get_context_data()
+        base['skills'] = self.hero.skills
+        return base
 
 
 class HeaderComponentView(TemplateView):
     template_name = 'main/components/header_component.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HeaderComponentView, self).get_context_data()
+        context['settings'] = SiteSettings.objects.all().first()
+        return context
 
 
 class FooterComponentView(TemplateView):

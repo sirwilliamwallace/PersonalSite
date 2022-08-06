@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hero, Skills
+from .models import Hero, Skills, SiteSettings
 
 
 # Register your models here.
@@ -10,4 +10,9 @@ class HeroAdmin(admin.ModelAdmin):
 
 @admin.register(Skills)
 class SkillsAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
     pass

@@ -17,5 +17,11 @@ class Hero(models.Model):
 
 class Skills(models.Model):
     skill = models.CharField(max_length=50)
+    short_description = models.CharField(max_length=300, null=True)
+
     def __str__(self):
         return f"{self.skill}"
+
+
+class SiteSettings(models.Model):
+    logo = models.ImageField()
