@@ -33,7 +33,7 @@ class Profile(models.Model):
     profile = models.CharField(max_length=100, verbose_name='Skills ')
     email = models.EmailField(max_length=300, verbose_name='Email Address ')
     phone = models.CharField(max_length=100, verbose_name='Phone Number')
-
+    about = models.TextField(verbose_name='About ', null=True)
     def __str__(self):
         return self.name
 
