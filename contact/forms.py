@@ -33,11 +33,18 @@ class ContactUsModelForm(forms.ModelForm):
                     "rows": "5",
                     "placeholder": "Message"
                 }
-            )
+            ),
+            'attached_file': forms.FileInput(attrs={
+                "class": "form-control",
+                "name": "file",
+                "id": "file",
+                "multiple": True
+            })
         }
         labels = {
             "full_name": "Full Name",
             "email": "Email Address",
             "title": "Subject",
             "message": "Your Message",
+            "attached_file": "Attached File",
         }
