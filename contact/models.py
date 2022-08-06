@@ -10,6 +10,7 @@ class ContactModel(models.Model):
     response = models.TextField(verbose_name='Response from Admin', null=True, blank=True)
     createDate = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     isRead = models.BooleanField(default=False, verbose_name='Is the message read by the Admin')
+    attached_file = models.FileField(verbose_name='Attached', null=True, blank=True)
 
     def __str__(self):
         return f"{self.full_name} - {self.email}"
