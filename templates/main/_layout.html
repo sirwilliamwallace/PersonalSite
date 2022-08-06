@@ -6,11 +6,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>
-      {% block title %}DevFolio Bootstrap Portfolio Template - Index{% endblock title %}
+      {% block title %}{% endblock title %}
   </title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-  {% include 'main/includes/header_references.html' %}
+  <meta content="My Personal Website Powered By django" name="description">
+  <meta content="PersonalSite" name="keywords">
+  {% include 'main/includes/header_references.html' with logo=settings.logo %}
 </head>
 <body>
 {% block header_references %}{% render_partial 'home.views.HeaderComponentView' %}{% endblock header_references %}
