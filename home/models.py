@@ -25,3 +25,18 @@ class Skills(models.Model):
 
 class SiteSettings(models.Model):
     logo = models.ImageField()
+
+
+class Profile(models.Model):
+    avatar = models.ImageField(verbose_name='Avatar ')
+    name = models.CharField(max_length=100, verbose_name='Name ')
+    profile = models.CharField(max_length=100, verbose_name='Skills ')
+    email = models.EmailField(max_length=300, verbose_name='Email Address ')
+    phone = models.CharField(max_length=100, verbose_name='Phone Number')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Profile'
+        verbose_name_plural = "Profile's"
