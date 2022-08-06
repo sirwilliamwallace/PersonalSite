@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
-# Create your views here.
+from .models import Hero
 from post.models import Post
+from django.contrib.auth import get_user_model
+# Create your views here.
 
 
 class HomePageView(TemplateView):
@@ -16,10 +17,6 @@ class ServicesPartialView(TemplateView):
     template_name = 'home/services.html'
 
 
-class PortfolioPartialView(TemplateView):
-    template_name = 'home/portfolio.html'
-
-
 class HeaderComponentView(TemplateView):
     template_name = 'main/components/header_component.html'
 
@@ -30,3 +27,11 @@ class FooterComponentView(TemplateView):
 
 class HeroComponentView(TemplateView):
     template_name = 'main/components/hero_component.html'
+
+    def get_context_data(self, **kwargs):
+        base = super(HeroComponentView, self).get_context_data()
+        hero = Hero.objects.all().first()
+        base['name'] = hero.name.get_full_name()
+        base['skills'] = hero.skills
+        base['bg_image'] = hero.bg_image
+        return base
