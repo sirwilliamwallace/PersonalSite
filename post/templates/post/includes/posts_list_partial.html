@@ -2,9 +2,17 @@
         <div class="col-md-4">
             <div class="card card-blog">
                 {% if post.image %}
-              <div class="card-img">
-                <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid"></a>
+              <div class="card-img" >
+                <a href="{{ post.get_absolute_url }}">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid img-thumbnail" height="650px" width="650px">
+                </a>
               </div>
+                    {% else %}
+                <div class="card-img">
+                    <a href="{{ post.get_absolute_url }}" >
+                        <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}" class="img-fluid img-thumbnail" height="650px" width="650px">
+                    </a>
+                </div>
                 {% endif %}
               <div class="card-body">
                 <h3 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title  }}</a></h3>

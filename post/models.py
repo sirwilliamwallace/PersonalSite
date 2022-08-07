@@ -18,7 +18,7 @@ class Post(models.Model):
     content = RichTextUploadingField(verbose_name='Content')
     createDate = models.DateTimeField(auto_now_add=True, verbose_name='Created Date')
     updateDate = models.DateTimeField(auto_now=True, verbose_name='Updated Date')
-    image = models.ImageField(upload_to=f'post_images/{id}-{createDate}/', null=True,verbose_name='Image')
+    image = models.ImageField(upload_to=f'post_images/', null=True,blank=True, verbose_name='Image')
     isActive = models.BooleanField(default=False, verbose_name='Active / Inactive')
     isDelete = models.BooleanField(verbose_name='Deleted')
 
