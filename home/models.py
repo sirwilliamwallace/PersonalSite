@@ -22,9 +22,20 @@ class Skills(models.Model):
     def __str__(self):
         return f"{self.skill}"
 
+    class Meta:
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills Section'
+
 
 class SiteSettings(models.Model):
     logo = models.ImageField()
+
+    class Meta:
+        verbose_name = 'Settings'
+        verbose_name_plural = 'Settings'
+
+    def __str__(self):
+        return f"Logo number {self.id}"
 
 
 class Profile(models.Model):
@@ -34,6 +45,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=300, verbose_name='Email Address ')
     phone = models.CharField(max_length=100, verbose_name='Phone Number')
     about = models.TextField(verbose_name='About ', null=True)
+
     def __str__(self):
         return self.name
 

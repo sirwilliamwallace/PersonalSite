@@ -7,6 +7,8 @@ class PostsListView(ListView):
     template_name = 'post/posts_list.html'
     model = models.Post
     context_object_name = 'posts'
+    ordering = ['-updateDate', ]
+    paginate_by = 1
 
     def get_queryset(self):
         query_set = super(PostsListView, self).get_queryset()
