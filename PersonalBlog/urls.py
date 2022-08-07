@@ -20,7 +20,6 @@ from django.urls import path, include
 
 urlpatterns = [
     # apps urls
-
     path('posts/', include('post.urls')),
     path('', include('home.urls')),
     path('contact-me/', include('contact.urls')),
