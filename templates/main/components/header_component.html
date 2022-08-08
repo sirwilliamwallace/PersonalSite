@@ -1,4 +1,3 @@
-{% load render_partial %}
 {% load static %}
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -7,13 +6,14 @@
 {#      <h1 class="logo"><a href="posts_list.html">DevFolio</a></h1>#}
       <!-- Uncomment below if you prefer to use an image logo -->
       <a href="{% url 'home:index_page' %}" class="logo"><img src="{{ settings.logo.url }}" alt="" class="img-fluid"></a>
-
-          <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="{% url 'home:index_page' %}#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="{% url 'home:index_page' %}#about">About</a></li>
           <li><a class="nav-link scrollto" href="{% url 'home:index_page' %}#services">Services</a></li>
           <li><a class="nav-link scrollto " href="{% url 'home:index_page' %}#blog">Blog</a></li>
+          <li><a class="nav-link scrollto " href="{% url 'account:register' %}">Register</a></li>
+          <li><a class="nav-link scrollto " href="{% url 'account:login' %}">Login</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
 
@@ -28,7 +28,7 @@
               </li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home:index_page' %}#about"">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
