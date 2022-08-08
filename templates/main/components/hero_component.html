@@ -7,7 +7,7 @@
         <div class="container">
             <h1 class="hero-title mb-4">I Am <i class="fst-italic">"{{ name }}"</i></h1>
           <p class="hero-subtitle"><span class="typed" data-typed-items="{% for skill in skills.all %}{{ skill }},{% endfor %}"></span></p>
-          <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p>
+          <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="{% url 'home:index_page' %}#about" role="button">Learn More</a></p>
         </div>
       </div>
     </div>
