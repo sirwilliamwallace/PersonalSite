@@ -1,11 +1,28 @@
 {% extends 'main/_layout.html' %}
-
-{% block title %} Register {% endblock %}
+{% load static %}
+{% block title %} Register  {% endblock %}
 {% block content %}
-<div class="container">
-    <form action="">
-    {{ register_form }}
-    {{ register_form.errors }}
-    </form>
+
+    <div class="container-fluid">
+
+    <div class="container">
+
+    <div class="col-md-6">
+        <div class="alert alert-danger" >{{ form.errors }}</div>
+
+        <div class="col-md-6">
+            <form class="form-group" action="" method="post">
+                    {% csrf_token %}
+                    {% for foo in form %}
+                            {{ foo.label_tag }}
+                            {{ foo }}
+                    {% endfor %}
+                <div class="col-md-12 text-center">
+                            <button type="submit" class="button button-a button-big button-rouded">Register</button>
+                          </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}
