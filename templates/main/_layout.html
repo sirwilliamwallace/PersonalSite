@@ -13,9 +13,10 @@
   {% include 'main/includes/header_references.html' with logo=settings.logo %}
 </head>
 <body>
-{% block header_references %}{% render_partial 'home.views.HeaderComponentView' %}{% endblock header_references %}
+{% render_partial 'home.views.HeaderComponentView' %}
+{% render_partial 'home.views.HeroComponentView' %}
 {% block content %}{% endblock content%}
-{% block footer_components %}{% render_partial 'home.views.FooterComponentView' %}{% endblock footer_components %}
-{% block footer_references %}{% include 'main/includes/footer_refrences.html' %}{% endblock %}
+{% render_partial 'home.views.FooterComponentView' %}
+{% include 'main/includes/footer_refrences.html' %}
 </body>
 </html>
