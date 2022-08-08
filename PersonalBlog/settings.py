@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'post',
     'home',
     'contact',
-    'user_accounts'
+    'user_accounts',
 ]
 
 MIDDLEWARE = [
