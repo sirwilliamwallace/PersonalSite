@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core import validators
 
 
 class RegisterForm(forms.Form):
@@ -13,7 +14,8 @@ class RegisterForm(forms.Form):
                 "id": "username",
                 "placeholder": "Your Username",
             }
-        )
+        ),
+        validators=[validators.MaxLengthValidator(50)]
     )
     email = forms.CharField(
         label="Email Address",
@@ -24,8 +26,12 @@ class RegisterForm(forms.Form):
                 "class": "form-control-lg",
                 "id": "email",
                 "placeholder": "Your Email Address",
-            }
-        )
+            },
+        ),
+        validators=[
+            validators.EmailValidator,
+            validators.MaxLengthValidator(100)
+        ]
     )
 
     password = forms.CharField(
@@ -36,7 +42,10 @@ class RegisterForm(forms.Form):
             "class": "form-control-lg",
             "id": "password",
             "placeholder": "Your Password", }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
     )
 
     confirm_password = forms.CharField(
@@ -47,7 +56,12 @@ class RegisterForm(forms.Form):
             "class": "form-control-lg",
             "id": "confirm_password",
             "placeholder": "Confirm Your Password",
-        }))
+        }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
 
     def clean_confirm_password(self):
         password = self.cleaned_data.get('password')
@@ -68,7 +82,7 @@ class LoginForm(forms.Form):
                 "id": "username",
                 "placeholder": "Your Username",
             }
-        )
+        ),
     )
 
     password = forms.CharField(
@@ -79,5 +93,5 @@ class LoginForm(forms.Form):
             "class": "form-control-lg",
             "id": "password",
             "placeholder": "Your Password", }
-        )
+        ),
     )
