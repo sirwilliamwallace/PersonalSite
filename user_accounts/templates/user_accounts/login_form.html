@@ -1,25 +1,25 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
-{% block title %} Register  {% endblock %}
+{% block title %} Login  {% endblock %}
 {% block content %}
 
     <div class="container-fluid">
 
     <div class="container">
-
+    {% if form.errors %}
     <div class="col-md-6">
-        <div class="alert alert-danger" >{{ form.errors }}</div>
+        <div class="alert alert-danger" >{{ form.errors }}
+    </div>
+    {% endif %}
 
         <div class="col-md-6">
             <form class="form-group" action="" method="post">
                     {% csrf_token %}
-                    {% for foo in form %}
-                            {{ foo.label_tag }}
-                            {{ foo }}
-                    {% endfor %}
+                {{ form.username }}
+                {{ form.password }}
                 <div class="col-md-12 text-center">
-                            <button type="submit" class="button button-a button-big button-rouded">Register</button>
-                          </div>
+                            <button type="submit" class="button button-a button-big button-rouded">Login</button>
+                </div>
             </form>
         </div>
     </div>
