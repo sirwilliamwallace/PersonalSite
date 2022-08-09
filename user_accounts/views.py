@@ -1,3 +1,5 @@
+from django.contrib.auth import login, logout
+from django.http import Http404, HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import View
@@ -50,5 +52,50 @@ class LoginFormView(View):
         }
         return render(request, 'user_accounts/login_form.html', context)
 
-    def post(self, request):
-        pass
+    def post(self, request: HttpRequest):
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user_name = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('password')
+            user: User = User.objects.filter(username__iexact=user_name).first()
+            if user is not None:
+                if not user.is_active:
+                    login_form.add_error('username', 'User not found')
+                else:
+                    isPassword = user.check_password(password)
+                    if isPassword:
+                        login(request, user)
+                        return redirect(reverse('home:index_page'))
+                    else:
+                        login_form.add_error('username', 'User not found')
+            else:
+                login_form.add_error('username', 'User not found')
+
+        context = {
+            'form': login_form
+        }
+
+        return render(request, 'user_accounts/login_form.html', context)
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('home:index_page'))
+
+
+class ActivateView(View):
+    def get(self, request, activation_code):
+        user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
+        print(user)
+        if user is not None:
+            if not user.is_active:
+                user.email_verification_code = get_random_string(72)
+                user.is_active = True
+                user.save()
+                # TODO: show a success message
+                return redirect(reverse('account:login'))
+            else:
+                # TODO: Show a message indication the activation of the user
+                pass
+        raise Http404('Activation code is invalid.')
