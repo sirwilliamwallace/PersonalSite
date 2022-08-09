@@ -6,20 +6,22 @@
     <div class="container-fluid">
 
     <div class="container">
-
+    {% if form.errors %}
     <div class="col-md-6">
-        <div class="alert alert-danger" >{{ form.errors }}</div>
+        <div class="alert alert-danger" >{{ form.errors }}
+    </div>
+    {% endif %}
 
-        <div class="col-md-6">
-            <form class="form-group" action="" method="post">
+        <div class="col-md-4">
+            <form class="form-group"  action="" method="post">
                     {% csrf_token %}
-                    {% for foo in form %}
-                            {{ foo.label_tag }}
-                            {{ foo }}
-                    {% endfor %}
+                    {{ form.username }}
+                    {{ form.email }}
+                    {{ form.password }}
+                    {{ form.confirm_password }}
                 <div class="col-md-12 text-center">
                             <button type="submit" class="button button-a button-big button-rouded">Register</button>
-                          </div>
+                </div>
             </form>
         </div>
     </div>
