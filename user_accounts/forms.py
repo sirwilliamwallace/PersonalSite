@@ -140,3 +140,10 @@ class ResetPasswordForm(forms.Form):
             validators.MinLengthValidator(8),
         ]
     )
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password == confirm_password:
+            return confirm_password
+        raise ValidationError("Password's don't match")
