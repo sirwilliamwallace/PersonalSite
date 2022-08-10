@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic.edit import View
 from django.utils.crypto import get_random_string
 from user_accounts.models import User
-from user_accounts.forms import RegisterForm, LoginForm
+from user_accounts.forms import RegisterForm, LoginForm, ForgetPasswordForm, ResetPasswordForm
 
 
 class RegisterFormView(View):
@@ -99,3 +99,33 @@ class ActivateView(View):
                 # TODO: Show a message indication the activation of the user
                 pass
         raise Http404('Activation code is invalid.')
+
+
+class ForgetPasswordView(View):
+    def get(self, request):
+        form = ForgetPasswordForm()
+        context = {"form": form}
+        return render(request, 'user_accounts/forgot_password.html', context)
+
+    def post(self, request):
+        form = ForgetPasswordForm(request.POST)
+        if form.is_valid():
+            user_name = form.cleaned_data.get('username')
+            user: User = User.objects.filter(username__iexact=user_name).first()
+            if user is not None:
+                user_email = user.email
+                # print(type(user_email))
+                # TODO: send reset password email to user
+                pass
+        context = {"form": form}
+        return render(request, 'user_accounts/forgot_password.html', context)
+
+
+class ResetPasswordView(View):
+    def get(self, request, activation_code):
+        user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
+        if user is None:
+            return redirect(reverse('account:login'))
+        form = ResetPasswordForm()
+        context = {"form": form}
+        return render(request, 'user_accounts/reset_password.html', context)
