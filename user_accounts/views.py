@@ -7,6 +7,8 @@ from django.utils.crypto import get_random_string
 from user_accounts.models import User
 from user_accounts.forms import RegisterForm, LoginForm, ForgetPasswordForm, ResetPasswordForm
 
+from tools.send_email_tool import send_email
+
 
 class RegisterFormView(View):
     def get(self, request):
@@ -35,7 +37,12 @@ class RegisterFormView(View):
                                 is_active=False)
                 new_user.set_password(user_password)
                 new_user.save()
-                # TODO: Send activation code
+                send_email(
+                    subject="User activation link",
+                    to=new_user.email,
+                    context={'user': new_user},
+                    template_name='emails/activation_code.html'
+                )
 
                 return redirect(reverse('account:login'))
         context = {
