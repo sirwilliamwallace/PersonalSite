@@ -6,7 +6,6 @@ from django.views.generic.edit import View
 from django.utils.crypto import get_random_string
 from user_accounts.models import User
 from user_accounts.forms import RegisterForm, LoginForm, ForgetPasswordForm, ResetPasswordForm
-
 from tools.send_email_tool import send_email
 
 
@@ -28,6 +27,7 @@ class RegisterFormView(View):
             user_password = register_form.cleaned_data.get('password')
             exist_email_user: bool = User.objects.filter(email__iexact=user_email).exists()
             exist_username_user: bool = User.objects.filter(username__iexact=user_name).exists()
+
             if exist_email_user:
                 register_form.add_error('email', f'{user_email} is already taken.')
             elif exist_username_user:
@@ -41,7 +41,7 @@ class RegisterFormView(View):
                     subject="User activation link",
                     to=new_user.email,
                     context={'user': new_user},
-                    template_name='emails/activation_code.html'
+                    template_name='mail_templates/account_activation.html'
                 )
 
                 return redirect(reverse('account:login'))
@@ -103,7 +103,7 @@ class ActivateView(View):
                 # TODO: show a success message
                 return redirect(reverse('account:login'))
             else:
-                # TODO: Show a message indication the activation of the user
+                # TODO: Show a message of user being active
                 pass
         raise Http404('Activation code is invalid.')
 
@@ -121,9 +121,10 @@ class ForgetPasswordView(View):
             user: User = User.objects.filter(username__iexact=user_name).first()
             if user is not None:
                 user_email = user.email
-                # print(type(user_email))
-                # TODO: send reset password email to user
-                pass
+                print(user_email)
+                send_email('Password Recovery', user_email, context={'user': user},
+                           template_name='mail_templates/forget_password.html')
+
         context = {"form": form}
         return render(request, 'user_accounts/forgot_password.html', context)
 
