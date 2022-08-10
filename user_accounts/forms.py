@@ -95,3 +95,48 @@ class LoginForm(forms.Form):
             "placeholder": "Your Password", }
         ),
     )
+
+
+class ForgetPasswordForm(forms.Form):
+    username = forms.CharField(
+        label="Username",
+        label_suffix="",
+        widget=forms.TextInput(
+            attrs={"type": "text",
+                   "class": "form-control-lg",
+                   "id": "username",
+                   "placeholder": "Your Username",
+                   }
+        ),
+    )
+
+
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(
+        label="Password",
+        label_suffix="",
+        widget=forms.PasswordInput(attrs={
+            "type": "password",
+            "class": "form-control-lg",
+            "id": "password",
+            "placeholder": "Your Password", }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
+
+    confirm_password = forms.CharField(
+        label="Confirm Password",
+        label_suffix="",
+        widget=forms.PasswordInput(attrs={
+            "type": "password",
+            "class": "form-control-lg",
+            "id": "confirm_password",
+            "placeholder": "Confirm Your Password",
+        }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
