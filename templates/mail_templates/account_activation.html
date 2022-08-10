@@ -1,0 +1,12 @@
+<div class="container">
+    <h1>
+        Activation link for {{ user.username }}
+    </h1>
+    <hr>
+    <p>
+        In order to activate your account click the link below
+    </p>
+    <a href="http://localhost:8000{% url 'account:activation_code' activation_code=user.email_verification_code %}">
+        Activate
+    </a>
+</div>
