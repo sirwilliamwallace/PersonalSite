@@ -124,8 +124,28 @@ class ForgetPasswordView(View):
 class ResetPasswordView(View):
     def get(self, request, activation_code):
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
+        # print(activation_code)
         if user is None:
             return redirect(reverse('account:login'))
         form = ResetPasswordForm()
+        context = {
+            "user": user,
+            "form": form
+        }
+        return render(request, 'user_accounts/reset_password.html', context)
+
+    def post(self, request, activation_code):
+        form = ResetPasswordForm(request.POST)
+        user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
+
+        if user is None:
+            return redirect(reverse('account:login'))
+        if form.is_valid():
+            new_password = form.cleaned_data.get('confirm_password')
+            user.set_password(new_password)
+            user.email_verification_code = get_random_string(72)
+            user.is_active = True
+            user.save()
+            return redirect(reverse('account:login'))
         context = {"form": form}
         return render(request, 'user_accounts/reset_password.html', context)
