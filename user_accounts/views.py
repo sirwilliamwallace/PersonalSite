@@ -137,7 +137,6 @@ class ResetPasswordView(View):
     def post(self, request, activation_code):
         form = ResetPasswordForm(request.POST)
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
-
         if user is None:
             return redirect(reverse('account:login'))
         if form.is_valid():
