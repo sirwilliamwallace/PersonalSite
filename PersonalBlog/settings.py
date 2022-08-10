@@ -11,15 +11,20 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+creds_dir = BASE_DIR / "PersonalBlog" / "settings_creds.json"
+with open(creds_dir, 'r') as settings_creds:
+    creds = json.load(settings_creds)
+    credentials = creds['secrets']
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g(ef0b5ty2%pr3l+tr1-0lq9raaqot0_5+89m@293=h_00@*7t'
+SECRET_KEY = credentials.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -115,7 +120,7 @@ FILE_UPLOAD_HANDLERS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'UTC'
 
@@ -138,7 +143,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "static_cdn" / "media_root"
 CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
 
-# Default primary key field type
+
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -151,9 +156,9 @@ CKEDITOR_CONFIGS = {
     }
 }
 EMAIL_BACKEND = 'django.core.mail.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = credentials.get('EMAIL_HOST')
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = credentials.get('EMAIL_PORT')
+EMAIL_HOST_USER = credentials.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = credentials.get('EMAIL_HOST_PASSWORD')
 
