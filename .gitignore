@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-media_root/
+static_cdn/
 .idea/
 # C extensions
 *.so
