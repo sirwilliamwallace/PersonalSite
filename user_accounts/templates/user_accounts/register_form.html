@@ -20,7 +20,7 @@
     {% endif %}
 
         <div class="col-md-4">
-            <form class="form-group"  action="{% url 'account:forgot-password' %}" method="post">
+            <form class="form-group"  action="{% url 'account:register' %}" method="post">
                     {% csrf_token %}
                     {{ form.username }}
                     {{ form.email }}
