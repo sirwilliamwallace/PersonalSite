@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_admins
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
@@ -12,4 +12,5 @@ def send_email(subject, to, context, template_name):
         send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     except Exception as e:
         print(e)
+        mail_admins("ERROR occured in sending email", message=e, fail_silently=True)
         pass
