@@ -60,21 +60,29 @@ class Profile(models.Model):
 
 class SocialMediaAccounts(models.Model):
     platform = models.CharField(max_length=50, verbose_name="Social media platform")
-    account_link = models.CharField(max_length=200, verbose_name="Account reference link")
+    account_link = models.URLField(max_length=200, verbose_name="Account reference link")
+
     def __str__(self):
         return self.platform
+
     class Meta:
         verbose_name = "Social Media Account"
         verbose_name_plural = "Social Media Account's"
+
+
 class GetInTouch(models.Model):
     getInTouchText = models.TextField(verbose_name="Get in touch text")
     address = models.CharField(max_length=300, verbose_name="Address ", null=True, blank=True)
-    phone_number = models.CharField(max_length=150, verbose_name="Phone Number")
-    email_address = models.EmailField(verbose_name="Email Address ")
-    social_media = models.ForeignKey(SocialMediaAccounts, on_delete=models.CASCADE, verbose_name="Social media accounts")
+    phone_number = models.CharField(
+        max_length=150, verbose_name="Phone Number", null=True, blank=True)
+    email_address = models.EmailField(
+        verbose_name="Email Address ", null=True, blank=True)
+    social_media = models.ManyToManyField(SocialMediaAccounts, verbose_name="Social media accounts", blank=True, related_name='platforms')
+    isActive = models.BooleanField(default=False, verbose_name="Be shown in contact section")
 
     class Meta:
         verbose_name = "Get in touch"
         verbose_name_plural = "Get in touch module"
 
-
+    def __str__(self):
+        return f"{self.id} - {self.phone_number} - {self.email_address}"

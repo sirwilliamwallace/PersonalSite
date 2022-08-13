@@ -51,7 +51,7 @@ class FooterComponentView(TemplateView):
 
 class HeroComponentView(TemplateView):
     template_name = 'main/components/hero_component.html'
-
+    
     def get_context_data(self, **kwargs):
         base = super(HeroComponentView, self).get_context_data()
         hero = Hero.objects.all().first()
