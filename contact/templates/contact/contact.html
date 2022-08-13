@@ -15,7 +15,7 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="{% url 'contact-me:contact-form' %}" enctype="multipart/form-data" method="post" role="form" class="php-form-control">
+                      <form action="{% url 'contact-me:contact-form' %}" method="post" enctype="multipart/form-data" method="post" role="form" class="php-form-control">
                         {% csrf_token %}
                         <div class="row">
                             {% for field in form %}
@@ -23,11 +23,16 @@
                                 {{ field.errors }}
                             {% endfor %}
                           <div class="col-md-12 text-center my-3">
-                            <div class="error-message">{{ form.errors }}</div>
-
-
-                              {#TODO: succes message #}
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                                {% if form.errors %}
+                              <li class="alert alert-danger">{{ form.errors }}</li>
+                                {% endif %}
+                              {% if messages %}
+                            <ul class="messages">
+                                  {% for message in messages %}
+                                        <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                  {% endfor %}
+                              {% endif %}
+                            </ul>
                           </div>
                           <div class="col-md-12 text-center">
                             <button type="submit" class="button button-a button-big button-rouded">Send Message</button>
