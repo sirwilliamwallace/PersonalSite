@@ -44,7 +44,8 @@ class RegisterFormView(View):
                     context={'user': new_user},
                     template_name='mail_templates/account_activation.html'
                 )
-                messages.info(self.request, f"An email containing the activation link has been sent to {new_user.email}")
+                messages.info(self.request,
+                              f"An email containing the activation link has been sent to {new_user.email}")
                 return redirect(reverse('account:login'))
         context = {
             "form": register_form
@@ -90,7 +91,7 @@ class LoginFormView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        messages.info(self.request, "Successfuly logged out")
+        messages.info(self.request, "Successfully logged out")
         return redirect(reverse('home:index_page'))
 
 
@@ -158,7 +159,7 @@ class ResetPasswordView(View):
             user.email_verification_code = get_random_string(72)
             user.is_active = True
             user.save()
-            messages.success(self.request, "Password successfuly changed.")
+            messages.success(self.request, "Password successfully changed.")
             return redirect(reverse('account:login'))
         context = {"form": form}
         return render(request, 'user_accounts/reset_password.html', context)
