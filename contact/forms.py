@@ -1,11 +1,15 @@
 from django import forms
+from django.core import validators
+from django.core.exceptions import ValidationError
+
 from contact.models import ContactModel
 
 
 class ContactUsModelForm(forms.ModelForm):
+    attached_file = forms.ImageField(required=False)
+
     class Meta:
         model = ContactModel
-        exclude = ('createDate', 'isRead', 'response',)
         widgets = {
             'full_name': forms.TextInput(attrs={"type": "text", "class": "form-control", "name": "name", "id": "name",
                                                 "placeholder": "Your Name"}),
@@ -38,7 +42,7 @@ class ContactUsModelForm(forms.ModelForm):
                 "class": "form-control",
                 "name": "file",
                 "id": "file",
-                "multiple": True
+                "multiple": True,
             })
         }
         labels = {
@@ -48,3 +52,4 @@ class ContactUsModelForm(forms.ModelForm):
             "message": "Your Message",
             "attached_file": "Attached File",
         }
+        exclude = ('createDate', 'isRead', 'response',)
