@@ -1,12 +1,14 @@
 from django.views.generic.edit import CreateView
-from .forms import ContactUsModelForm
+from django.contrib.messages.views import SuccessMessageMixin
 from home.models import GetInTouch
+from .forms import ContactUsModelForm
 
 
-class ContactFormView(CreateView):
+class ContactFormView(SuccessMessageMixin, CreateView):
     template_name = 'contact/contact.html'
     form_class = ContactUsModelForm
     success_url = '/#contact'
+    success_message = "Your form was successfully uploaded."
 
     def get_context_data(self, **kwargs):
         base = super(ContactFormView, self).get_context_data()
