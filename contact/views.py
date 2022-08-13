@@ -1,3 +1,7 @@
+from django.contrib import messages
+from django.core import validators
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from home.models import GetInTouch
@@ -9,6 +13,10 @@ class ContactFormView(SuccessMessageMixin, CreateView):
     form_class = ContactUsModelForm
     success_url = '/#contact'
     success_message = "Your form was successfully uploaded."
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Invalid data received, Please fill the form carefully')
+        return redirect(reverse('home:index_page') + '#contact')
 
     def get_context_data(self, **kwargs):
         base = super(ContactFormView, self).get_context_data()
