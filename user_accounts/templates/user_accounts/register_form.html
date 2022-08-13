@@ -1,4 +1,4 @@
-{% extends 'main/_layout.html' %}
+{% extends 'home/index.html' %}
 {% load static %}
 {% block title %} Register  {% endblock %}
 {% block content %}
@@ -11,9 +11,16 @@
         <div class="alert alert-danger" >{{ form.errors }}
     </div>
     {% endif %}
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 
         <div class="col-md-4">
-            <form class="form-group"  action="" method="post">
+            <form class="form-group"  action="{% url 'account:forgot-password' %}" method="post">
                     {% csrf_token %}
                     {{ form.username }}
                     {{ form.email }}

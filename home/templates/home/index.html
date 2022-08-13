@@ -6,6 +6,12 @@
 {% block title %}Home Page{% endblock %}
 {% block content %}
   <main id="main">
+                                    {% if messages %}
+                            <ul class="messages">
+                                  {% for message in messages %}
+                                        <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                  {% endfor %}
+                              {% endif %}
     <!-- ======= About Section ======= -->
       {% render_partial 'home.views.AboutPartialView' %}
     <!-- End About Section -->

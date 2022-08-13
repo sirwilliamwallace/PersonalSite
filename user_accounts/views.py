@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib import messages
 from django.http import Http404, HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -43,7 +44,7 @@ class RegisterFormView(View):
                     context={'user': new_user},
                     template_name='mail_templates/account_activation.html'
                 )
-
+                messages.info(self.request, f"An email containing the activation link has been sent to {new_user.email}")
                 return redirect(reverse('account:login'))
         context = {
             "form": register_form
@@ -72,6 +73,7 @@ class LoginFormView(View):
                     isPassword = user.check_password(password)
                     if isPassword:
                         login(request, user)
+                        messages.success(self.request, f"Logged in as {user.username}")
                         return redirect(reverse('home:index_page'))
                     else:
                         login_form.add_error('username', 'User not found')
@@ -88,6 +90,7 @@ class LoginFormView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
+        messages.info(self.request, "Successfuly logged out")
         return redirect(reverse('home:index_page'))
 
 
@@ -100,11 +103,12 @@ class ActivateView(View):
                 user.email_verification_code = get_random_string(72)
                 user.is_active = True
                 user.save()
-                # TODO: show a success message
+                messages.add_message(self.request, messages.SUCCESS, f"{user.username} is activated.")
                 return redirect(reverse('account:login'))
             else:
-                # TODO: Show a message of user being active
-                pass
+                messages.add_message(self.request, messages.WARNING, f"{user.username} is already active")
+                return redirect(reverse('account:login'))
+
         raise Http404('Activation code is invalid.')
 
 
@@ -124,7 +128,7 @@ class ForgetPasswordView(View):
                 print(user_email)
                 send_email('Password Recovery', user_email, context={'user': user},
                            template_name='mail_templates/forget_password.html')
-
+                messages.info(self.request, "PLease check your email")
         context = {"form": form}
         return render(request, 'user_accounts/forgot_password.html', context)
 
@@ -146,6 +150,7 @@ class ResetPasswordView(View):
         form = ResetPasswordForm(request.POST)
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
         if user is None:
+            messages.warning(self.request, "User not found")
             return redirect(reverse('account:login'))
         if form.is_valid():
             new_password = form.cleaned_data.get('confirm_password')
@@ -153,6 +158,7 @@ class ResetPasswordView(View):
             user.email_verification_code = get_random_string(72)
             user.is_active = True
             user.save()
+            messages.success(self.request, "Password successfuly changed.")
             return redirect(reverse('account:login'))
         context = {"form": form}
         return render(request, 'user_accounts/reset_password.html', context)
