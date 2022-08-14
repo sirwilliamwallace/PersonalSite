@@ -1,3 +1,4 @@
+{% load today %}
 <div class="container">
     <h1>
         Activation link for {{ user.username }}
@@ -6,6 +7,10 @@
     <p>
         In order to activate your account click the link below
     </p>
+    <p>
+        Date: {% return_today %}
+    </p>
+
     <a href="http://localhost:8000{% url 'account:activation_code' activation_code=user.email_verification_code %}">
         Activate
     </a>
