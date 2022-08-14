@@ -12,5 +12,5 @@ def send_email(subject, to, context, template_name):
         send_mail(subject, plain_message, from_email, [to], html_message=html_message)
     except Exception as e:
         print(e)
-        mail_admins("ERROR occured in sending email", message=e, fail_silently=True)
+        mail_admins("ERROR occurred in sending email", message=e, fail_silently=True)
         pass
