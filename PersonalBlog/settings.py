@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-creds_dir = BASE_DIR / "PersonalBlog" / "settings_creds.json"
+creds_dir = BASE_DIR / "settings_creds.json"
 with open(creds_dir, 'r') as settings_creds:
     creds = json.load(settings_creds)
     credentials = creds['secrets']
