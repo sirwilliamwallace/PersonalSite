@@ -26,7 +26,8 @@ class Post(models.Model):
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='blog_posts',
-                               verbose_name='Author'
+                               verbose_name='Author',
+                               editable=False
                                )
     description = models.CharField(max_length=300,
                                    verbose_name='Short Description'
