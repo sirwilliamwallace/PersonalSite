@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'django_render_partial',
+    'sorl.thumbnail',
     # My apps
     'post',
     'home',
