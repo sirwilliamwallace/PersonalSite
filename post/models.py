@@ -1,5 +1,4 @@
 from django.db import models
-import os
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
@@ -37,10 +36,10 @@ class Post(models.Model):
                                       verbose_name='Created Date')
     updateDate = models.DateTimeField(auto_now=True,
                                       verbose_name='Updated Date')
-    image = models.ImageField(upload_to=f'post_images/',
+    image = models.ImageField(upload_to='post_images/',
                               null=True,
                               blank=True,
-                              verbose_name='Image'
+                              verbose_name='Image',
                               )
     isActive = models.BooleanField(default=False,
                                    verbose_name='Active / Inactive')
