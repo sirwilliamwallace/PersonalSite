@@ -1,7 +1,6 @@
 from django.contrib import admin
 from . import models
 
-
 # Register your models here.
 from .models import Post
 
@@ -22,10 +21,9 @@ class PostAdmin(admin.ModelAdmin):
         return super(PostAdmin, self).save_model(request, obj, form, change)
 
 
-
 @admin.register(models.PostCategory)
 class PostCategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'url_title', 'isDelete', 'isActive', 'parent_model')
+    list_display = ('title', 'url_title', 'isDelete', 'isActive',)
     search_fields = ('title', 'url_title',)
 
 
