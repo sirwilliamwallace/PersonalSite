@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_render_partial',
     'sorl.thumbnail',
+    'custom_template_tag.apps.CustomTemplateTagConfig',
     # My apps
     'post',
     'home',
