@@ -1,17 +1,20 @@
 {% load static %}
-            <div class="col-md-4">
+{% load thumbnail %}
+<div class="col-md-4">
 
-            <div class="card card-blog">
+    <div class="card card-blog">
                 {% if post.image %}
               <div class="card-img" >
                 <a href="{{ post.get_absolute_url }}">
-                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid img-thumbnail" height="650px" width="650px">
+                {% thumbnail post.image "1000x666" as im %}
+                    <img src="{{ im.url }}" alt="{{ post.title }}" class="img-fluid img-thumbnail">
+                {% endthumbnail %}
                 </a>
               </div>
                     {% else %}
                 <div class="card-img">
                     <a href="{{ post.get_absolute_url }}" >
-                        <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}" class="img-fluid img-thumbnail" height="650px" width="650px">
+                        <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}" class="img-fluid img-thumbnail">
                     </a>
                 </div>
                 {% endif %}
@@ -23,8 +26,12 @@
               </div>
               <div class="card-footer">
                 <div class="post-author">
-                  <a href="#">
-                    <img src="{% static 'assets/img/testimonial-2.jpg' %}" alt="" class="avatar rounded-circle">
+                  <a href="{% url 'home:index_page'  %}#about" target="_blank">
+                      {% if post.author.avatar %}
+                            <img src="{{ post.author.avatar.url }}" alt="" class="avatar rounded-circle">
+                        {% else %}
+                            <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ post.author.get_full_name }}" class="avatar rounded-circle">
+                      {% endif %}
                     <span class="author">{{ post.author }}</span>
                   </a>
                 </div>
