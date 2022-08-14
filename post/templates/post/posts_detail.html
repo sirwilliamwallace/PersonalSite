@@ -1,5 +1,6 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
+{% load thumbnail %}
 {% block content %}
   <main id="main">
 
@@ -11,7 +12,9 @@
             <div class="post-box">
              {% if post.image %}
              <div class="post-thumb">
-                <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}" width="42%" height="42%">
+             {% thumbnail post.image "1000x666" quality=95 as im %}
+                <img src="{{ im.url }}" class="img-fluid" alt="{{ post.title }}">
+             {% endthumbnail %}
              </div>
                 {% else %}
                  <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}" width="100%" height="42%">

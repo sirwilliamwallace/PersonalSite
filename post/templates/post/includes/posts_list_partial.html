@@ -6,7 +6,7 @@
                 {% if post.image %}
               <div class="card-img" >
                 <a href="{{ post.get_absolute_url }}">
-                {% thumbnail post.image "1000x666" as im %}
+                {% thumbnail post.image "1000x666" quality=65 as im %}
                     <img src="{{ im.url }}" alt="{{ post.title }}" class="img-fluid img-thumbnail">
                 {% endthumbnail %}
                 </a>
