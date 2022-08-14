@@ -31,7 +31,7 @@ $ python3 manage.py createsuperuser
 ```
 $ python3 manage.py runserver
 ```
+# You should complete info In the admin panel
 # TODO: 
-- [ ] Write instructions
 - [ ] Comments section
 - [ ] Complete README
