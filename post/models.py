@@ -78,12 +78,6 @@ class PostTag(models.Model):
 
 
 class PostCategory(models.Model):
-    parent_model = models.ForeignKey('PostCategory',
-                                     on_delete=models.CASCADE,
-                                     verbose_name="Parent Category",
-                                     null=True,
-                                     blank=True
-                                     )
     title = models.CharField(max_length=300,
                              db_index=True,
                              verbose_name='Title')
