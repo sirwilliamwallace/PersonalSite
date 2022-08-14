@@ -5,3 +5,14 @@ django-js-asset==2.0.0
 django-render-partial==0.4
 Pillow==9.2.0
 sqlparse==0.4.2
+asgiref==3.5.2
+autopep8==1.7.0
+Django==4.1
+django-ckeditor==6.4.2
+django-js-asset==2.0.0
+django-render-partial==0.4
+Pillow==9.2.0
+pycodestyle==2.9.1
+sorl-thumbnail==12.8.0
+sqlparse==0.4.2
+toml==0.10.2
