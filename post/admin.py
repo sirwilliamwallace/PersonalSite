@@ -16,7 +16,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(models.PostCategory)
 class PostCategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'url_title', 'isDelete', 'isActive',)
+    list_display = ('title', 'url_title', 'isDelete', 'isActive','parent_model')
     search_fields = ('title', 'url_title',)
 
 
