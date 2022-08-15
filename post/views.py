@@ -14,6 +14,7 @@ class PostsListView(ListView):
         return query_set.filter(isActive=True).order_by('-createDate')
 
 
+
 class PostDetailView(DetailView):
     template_name = 'post/posts_detail.html'
     model = Post
