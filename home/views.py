@@ -51,11 +51,10 @@ class FooterComponentView(TemplateView):
 
 class HeroComponentView(TemplateView):
     template_name = 'main/components/hero_component.html'
-    
+
     def get_context_data(self, **kwargs):
         base = super(HeroComponentView, self).get_context_data()
         hero = Hero.objects.all().first()
-        base['name'] = hero.name.get_full_name()
-        base['skills'] = hero.skills
-        base['bg_image'] = hero.bg_image
+        base['name'], base['skills'], base[
+            'bg_image'] = hero.name.get_full_name() if hero.name.get_full_name() else hero.name.username, hero.skills, hero.bg_image
         return base
