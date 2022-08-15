@@ -18,7 +18,7 @@ class Post(models.Model):
                                       )
     slug = models.SlugField(max_length=300,
                             default=""
-                            ,null=False,
+                            , null=False,
                             db_index=True,
                             unique=True,
                             verbose_name='Slug (Auto-complete)'
@@ -94,3 +94,12 @@ class PostCategory(models.Model):
     class Meta:
         verbose_name = 'Post Category'
         verbose_name_plural = "Post Categories"
+
+
+class PostComment(models.Model):
+    indicated_post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Post ")
+    parent = models.ForeignKey('PostComment', db_index=True, on_delete=models.CASCADE, verbose_name='Parent comment')
+    user = models.ForeignKey(User, db_index=True, on_delete=models.CASCADE, verbose_name='User ')
+    createDate = models.DateTimeField(db_index=True, auto_now_add=True, verbose_name='Create Date')
+    isApproved = models.BooleanField(default=False, verbose_name='Is Approved')
+    comment_text = models.TextField(db_index=True, verbose_name='Text ')
