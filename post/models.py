@@ -115,3 +115,10 @@ class PostComment(models.Model):
                                      verbose_name='Is Approved')
     comment_text = models.TextField(db_index=True,
                                     verbose_name='Text ')
+
+    def __str__(self):
+        return f"{self.indicated_post.title} - {self.user}"
+
+    class Meta:
+        verbose_name = "Comments"
+        verbose_name_plural = "Comment"
