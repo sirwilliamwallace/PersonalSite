@@ -102,6 +102,8 @@ class PostComment(models.Model):
                                        , verbose_name="Post ")
     parent = models.ForeignKey('PostComment',
                                db_index=True,
+                               null=True,
+                               blank=True,
                                on_delete=models.CASCADE,
                                verbose_name='Parent comment')
     user = models.ForeignKey(User,
