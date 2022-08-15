@@ -1,5 +1,5 @@
 # Personal Site Powered by _[django framework](https://djangoproject.com)_
-## This project was built to be my personal website, But I have decided to publish it on GitHub 
+## This project was built to be my personal website, However I have decided to publish it on GitHub 
 # _Instructions_
 ## _If you decide to give it a try_
 ### In order to get the website working on [127.0.0.1 Port 8000](http://127.0.0.1:8000) OR [localhost Port 8000](http://localhost:8000)
