@@ -35,6 +35,7 @@ $ python3 manage.py runserver
 # <hr />
 # TODO: 
 - [ ] Comments section
+- [ ] Complete Search section in articles
 - [ ] Complete README
 
 <br /><br /><br /><br /><br /><br />
