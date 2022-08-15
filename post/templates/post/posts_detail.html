@@ -98,16 +98,18 @@
                  <li>
                  {% if comment.user.avatar %}
                      <div class="comment-avatar">
-                         <img src="{{ comment.user.avatar.url }}" alt="{{ comment.user.username }}">
+                             {% thumbnail comment.user.avatar "80x80" quality=60 as im %}
+                                 <img src="{{ im.url }}" alt="{{ reply.user.username }}">
+                             {% endthumbnail %}
                      </div>
                      {% else %}
                      <div class="comment-avatar">
-                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ comment.user.username }}">
+                    {#TODO: decrease avatar's size#}
+                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
                      </div>
                  {% endif %}
                      <div class="comment-details">
                         <h4 class="comment-author">{{ comment.user }}</h4>
-{#                        <span>18 Sep 2017</span>#}
                         <span>{{ comment.createDate }}</span>
                         <p>
                             {{ comment.comment_text }}
@@ -116,30 +118,30 @@
                   </div>
                 </li>
 
-                {% for reply in comment.postcomment_set.all %}
-                    <li class="comment-children">
-                         {% if reply.user.avatar %}
-                             <div class="comment-avatar">
-                                 <img src="{{ reply.user.avatar.url }}" alt="{{ reply.user.username }}">
-                             </div>
-                             {% else %}
-                             <div class="comment-avatar">
-                                 <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
-                             </div>
-                         {% endif %}
-                             <div class="comment-details">
-                                <h4 class="comment-author">{{ reply.user }}</h4>
-        {#                        <span>18 Sep 2017</span>#}
-                                <span>{{ reply.createDate }}</span>
-                                <p>
-                                    {{ reply.comment_text }}
-                                </p>
-                                <a href="3">Reply</a>
-                          </div>
-                    </li>
+                        {% for reply in comment.postcomment_set.all %}
+                            <li class="comment-children">
+                                 {% if reply.user.avatar %}
+                                     <div class="comment-avatar">
+                                     {% thumbnail reply.user.avatar "80x80" quality=60 as im %}
+                                         <img src="{{ im.url }}" alt="{{ reply.user.username }}">
+                                     {% endthumbnail %}
+                                     </div>
+                                     {% else %}
+                                     <div class="comment-avatar">
+                                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
+                                     </div>
+                                 {% endif %}
+                                     <div class="comment-details">
+                                        <h4 class="comment-author">{{ reply.user }}</h4>
+                                        <span>{{ reply.createDate }}</span>
+                                        <p>
+                                            {{ reply.comment_text }}
+                                        </p>
+                                        <a href="3">Reply</a>
+                                  </div>
+                            </li>
 
-                {% endfor %}
-
+                        {% endfor %}
                 {% endfor %}
 
               </ul>
