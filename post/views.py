@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Post
+from .models import Post, PostComment
 
 
 class PostsListView(ListView):
@@ -20,7 +20,9 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         query_set = super(PostDetailView, self).get_context_data()
+        post: Post = kwargs.get('object')
         query_set['latest_posts'] = Post.objects.all().order_by('-createDate')[:5]
+        query_set['comments'] = PostComment.objects.filter(indicated_post_id=post.id, parent=None).prefetch_related('postcomment_set')
         return query_set
 
     def get_queryset(self):
