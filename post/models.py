@@ -97,9 +97,21 @@ class PostCategory(models.Model):
 
 
 class PostComment(models.Model):
-    indicated_post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Post ")
-    parent = models.ForeignKey('PostComment', db_index=True, on_delete=models.CASCADE, verbose_name='Parent comment')
-    user = models.ForeignKey(User, db_index=True, on_delete=models.CASCADE, verbose_name='User ')
-    createDate = models.DateTimeField(db_index=True, auto_now_add=True, verbose_name='Create Date')
-    isApproved = models.BooleanField(default=False, verbose_name='Is Approved')
-    comment_text = models.TextField(db_index=True, verbose_name='Text ')
+    indicated_post = models.ForeignKey(Post,
+                                       on_delete=models.CASCADE
+                                       , verbose_name="Post ")
+    parent = models.ForeignKey('PostComment',
+                               db_index=True,
+                               on_delete=models.CASCADE,
+                               verbose_name='Parent comment')
+    user = models.ForeignKey(User,
+                             db_index=True,
+                             on_delete=models.CASCADE,
+                             verbose_name='User ')
+    createDate = models.DateTimeField(db_index=True,
+                                      auto_now_add=True,
+                                      verbose_name='Create Date')
+    isApproved = models.BooleanField(default=False,
+                                     verbose_name='Is Approved')
+    comment_text = models.TextField(db_index=True,
+                                    verbose_name='Text ')
