@@ -23,12 +23,11 @@ class RegisterFormView(View):
         if register_form.is_valid():
             print(register_form.cleaned_data)
 
-            user_name = register_form.cleaned_data.get('username')
-            user_email = register_form.cleaned_data.get('email')
-            user_password = register_form.cleaned_data.get('password')
+            user_name, user_email, user_password = register_form.cleaned_data.get(
+                'username'), register_form.cleaned_data.get('email'), register_form.cleaned_data.get('password')
+
             exist_email_user: bool = User.objects.filter(email__iexact=user_email).exists()
             exist_username_user: bool = User.objects.filter(username__iexact=user_name).exists()
-
             if exist_email_user:
                 register_form.add_error('email', f'{user_email} is already taken.')
             elif exist_username_user:
@@ -64,8 +63,7 @@ class LoginFormView(View):
     def post(self, request: HttpRequest):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            user_name = login_form.cleaned_data.get('username')
-            password = login_form.cleaned_data.get('password')
+            user_name, password = login_form.cleaned_data.get('username'), login_form.cleaned_data.get('password')
             user: User = User.objects.filter(username__iexact=user_name).first()
             if user is not None:
                 if not user.is_active:
@@ -98,7 +96,7 @@ class LogoutView(View):
 class ActivateView(View):
     def get(self, request, activation_code):
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
-        print(user)
+        # print(user)
         if user is not None:
             if not user.is_active:
                 user.email_verification_code = get_random_string(72)
@@ -126,7 +124,7 @@ class ForgetPasswordView(View):
             user: User = User.objects.filter(username__iexact=user_name).first()
             if user is not None:
                 user_email = user.email
-                print(user_email)
+                # print(user_email)
                 send_email('Password Recovery', user_email, context={'user': user},
                            template_name='mail_templates/forget_password.html')
                 messages.info(self.request, "PLease check your email")
