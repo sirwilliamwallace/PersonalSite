@@ -1,11 +1,10 @@
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from . import models
+from .models import Post
 
 
 class PostsListView(ListView):
     template_name = 'post/posts_list.html'
-    model = models.Post
+    model = Post
     context_object_name = 'posts'
     ordering = ['-updateDate', ]
     paginate_by = 3
@@ -17,13 +16,13 @@ class PostsListView(ListView):
 
 class PostDetailView(DetailView):
     template_name = 'post/posts_detail.html'
-    model = models.Post
+    model = Post
 
     def get_context_data(self, **kwargs):
         query_set = super(PostDetailView, self).get_context_data()
-        query_set['latest_posts'] = models.Post.objects.all().order_by('-createDate')[:5]
+        query_set['latest_posts'] = Post.objects.all().order_by('-createDate')[:5]
         return query_set
 
-    def get_queryset(self, *args, **kwargs):
-        query = super(PostDetailView, self).get_queryset(*args, **kwargs)
+    def get_queryset(self):
+        query = super(PostDetailView, self).get_queryset()
         return query.filter(isActive=True)
