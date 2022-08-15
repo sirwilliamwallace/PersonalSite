@@ -23,3 +23,7 @@ class PostDetailView(DetailView):
         query_set = super(PostDetailView, self).get_context_data()
         query_set['latest_posts'] = models.Post.objects.all().order_by('-createDate')[:5]
         return query_set
+
+    def get_queryset(self, *args, **kwargs):
+        query = super(PostDetailView, self).get_queryset(*args, **kwargs)
+        return query.filter(isActive=True)
