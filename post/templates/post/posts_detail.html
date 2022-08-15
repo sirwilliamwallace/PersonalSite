@@ -1,6 +1,7 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% load thumbnail %}
+{% load count_comments %}
 {% block content %}
   <main id="main">
 
@@ -32,7 +33,7 @@
                   </li>
                   <li>
                     <span class="bi bi-chat-left-text"></span>
-                    <a>{{ comments.count }}</a>
+                    <a>{% count_comments comments.count comments.prefetch_related.count %}</a>
                   </li>
                     <br>
                     <li>
@@ -91,7 +92,7 @@
 
             <div class="box-comments">
               <div class="title-box-2">
-                <h4 class="title-comments title-left">Comments ({{ comments.count }})</h4>
+                <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
               </div>
               <ul class="list-comments">
                 {% for comment in comments %}
