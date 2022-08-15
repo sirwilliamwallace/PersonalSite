@@ -33,7 +33,7 @@ class PostTagAdmin(admin.ModelAdmin):
 
 @admin.register(PostComment)
 class PostCommentAdmin(admin.ModelAdmin):
-    list_display = ('indicated_post', 'user', 'createDate', 'isApproved',)
+    list_display = ('indicated_post', 'user', 'parent', 'createDate', 'isApproved',)
     list_filter = ('indicated_post', 'user', 'createDate', 'isApproved',)
     search_fields = ('indicated_post', 'user', 'comment_text',)
     list_editable = ('isApproved',)
