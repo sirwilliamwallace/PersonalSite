@@ -19,9 +19,8 @@ class ContactFormView(SuccessMessageMixin, CreateView):
         return redirect(reverse('home:index_page') + '#contact')
 
     def get_context_data(self, **kwargs):
-        base = super(ContactFormView, self).get_context_data()
+        base = super(ContactFormView, self).get_context_data(**kwargs)
         get_in_touch: GetInTouch = GetInTouch.objects.filter(isActive=True).first()
         get_in_touch_platforms = get_in_touch.social_media.model
-        base['object'] = get_in_touch
-        base['social_media'] = get_in_touch_platforms.objects.all()
+        base['object'], base['social_media'] = get_in_touch, get_in_touch_platforms.objects.all()
         return base
