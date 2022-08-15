@@ -32,7 +32,7 @@
                   </li>
                   <li>
                     <span class="bi bi-chat-left-text"></span>
-                    <a>14</a>
+                    <a>{{ comments.count }}</a>
                   </li>
                     <br>
                     <li>
@@ -91,70 +91,57 @@
 
             <div class="box-comments">
               <div class="title-box-2">
-                <h4 class="title-comments title-left">Comments (34)</h4>
+                <h4 class="title-comments title-left">Comments ({{ comments.count }})</h4>
               </div>
               <ul class="list-comments">
-                <li>
-                  <div class="comment-avatar">
-                    <img src="/site_statics/assets/img/testimonial-2.jpg" alt="">
-                  </div>
-                  <div class="comment-details">
-                    <h4 class="comment-author">Oliver Colmenares</h4>
-                    <span>18 Sep 2017</span>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                      ipsam temporibus maiores
-                      quae natus libero optio, at qui beatae ducimus placeat debitis voluptates amet corporis.
-                    </p>
-                    <a href="3">Reply</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-avatar">
-                    <img src="/site_statics/assets/img/testimonial-4.jpg" alt="">
-                  </div>
-                  <div class="comment-details">
-                    <h4 class="comment-author">Carmen Vegas</h4>
-                    <span>18 Sep 2017</span>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                      ipsam temporibus maiores
-                      quae natus libero optio, at qui beatae ducimus placeat debitis voluptates amet corporis,
-                      veritatis deserunt.
-                    </p>
-                    <a href="3">Reply</a>
+                {% for comment in comments %}
+                 <li>
+                 {% if comment.user.avatar %}
+                     <div class="comment-avatar">
+                         <img src="{{ comment.user.avatar.url }}" alt="{{ comment.user.username }}">
+                     </div>
+                     {% else %}
+                     <div class="comment-avatar">
+                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ comment.user.username }}">
+                     </div>
+                 {% endif %}
+                     <div class="comment-details">
+                        <h4 class="comment-author">{{ comment.user }}</h4>
+{#                        <span>18 Sep 2017</span>#}
+                        <span>{{ comment.createDate }}</span>
+                        <p>
+                            {{ comment.comment_text }}
+                        </p>
+                        <a href="3">Reply</a>
                   </div>
                 </li>
-                <li class="comment-children">
-                  <div class="comment-avatar">
-                    <img src="/site_statics/assets/img/testimonial-2.jpg" alt="">
-                  </div>
-                  <div class="comment-details">
-                    <h4 class="comment-author">Oliver Colmenares</h4>
-                    <span>18 Sep 2017</span>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                      ipsam temporibus maiores
-                      quae.
-                    </p>
-                    <a href="3">Reply</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-avatar">
-                    <img src="/site_statics/assets/img/testimonial-2.jpg" alt="">
-                  </div>
-                  <div class="comment-details">
-                    <h4 class="comment-author">Oliver Colmenares</h4>
-                    <span>18 Sep 2017</span>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                      ipsam temporibus maiores
-                      quae natus libero optio.
-                    </p>
-                    <a href="3">Reply</a>
-                  </div>
-                </li>
+
+                {% for reply in comment.postcomment_set.all %}
+                    <li class="comment-children">
+                         {% if reply.user.avatar %}
+                             <div class="comment-avatar">
+                                 <img src="{{ reply.user.avatar.url }}" alt="{{ reply.user.username }}">
+                             </div>
+                             {% else %}
+                             <div class="comment-avatar">
+                                 <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
+                             </div>
+                         {% endif %}
+                             <div class="comment-details">
+                                <h4 class="comment-author">{{ reply.user }}</h4>
+        {#                        <span>18 Sep 2017</span>#}
+                                <span>{{ reply.createDate }}</span>
+                                <p>
+                                    {{ reply.comment_text }}
+                                </p>
+                                <a href="3">Reply</a>
+                          </div>
+                    </li>
+
+                {% endfor %}
+
+                {% endfor %}
+
               </ul>
             </div>
           </div>
