@@ -1,5 +1,5 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
+# from django.contrib import messages
+# from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, PostComment
 from .forms import CommentForm
@@ -25,10 +25,11 @@ class PostDetailView(DetailView):
         query_set = super(PostDetailView, self).get_context_data()
         post: Post = kwargs.get('object')
         query_set['latest_posts'] = Post.objects.all().order_by('-createDate')[:5]
-        query_set['comments'] = PostComment.objects.filter(isApproved=True,
-                                                           indicated_post_id=post.id,
-                                                           parent=None).order_by('-createDate').prefetch_related(
-            'postcomment_set')
+        comments = PostComment.objects.filter(isApproved=True,
+                                              indicated_post_id=post.id,
+                                              parent=None)
+        query_set['comments'] = comments.order_by('-createDate').prefetch_related('postcomment_set')
+        query_set['comment_form'] = CommentForm
         return query_set
 
     def get_queryset(self):
@@ -36,20 +37,3 @@ class PostDetailView(DetailView):
         return query.filter(isActive=True)
 
 
-class CommentCreate(SuccessMessageMixin, CreateView):
-    template_name = 'post/posts_detail.html'
-    model = PostComment
-    form_class = CommentForm
-    success_message = "Your comment has been submitted and will be published after our approval"
-    context_object_name = 'comment_form'
-
-    # TODO: complete comments section
-    def get_success_url(self):
-        return self.request.path
-
-    def get_current_path(self):
-        return self.request.path
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'Invalid data received, Please fill the form carefully.')
-        return self.get_success_url()
