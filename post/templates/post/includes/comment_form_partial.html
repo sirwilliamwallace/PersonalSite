@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 mb-3">
     </div>
-    <input type="hidden" name="parent" id="parentComment" value="">
+    {{ comment_form.parentId }}
     <div class="col-md-12 mb-3">
         <div class="form-group">
             {{ comment_form.comment_text}}
