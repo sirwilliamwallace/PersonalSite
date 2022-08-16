@@ -1,5 +1,5 @@
-# from django.contrib import messages
-# from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, PostComment
 from .forms import CommentForm
@@ -29,11 +29,30 @@ class PostDetailView(DetailView):
                                               indicated_post_id=post.id,
                                               parent=None)
         query_set['comments'] = comments.order_by('-createDate').prefetch_related('postcomment_set')
-        query_set['comment_form'] = CommentForm
+        query_set['comment_form'] = CommentForm()
         return query_set
+
+    def post(self, request, post_id, slug):
+        # TODO: implement parents
+        comment_form = CommentForm(self.request.POST)
+        if comment_form.is_valid():
+            data = comment_form.data
+            user_id = request.user.id
+            parent = comment_form.cleaned_data.get('parentComment')
+            comment_text = data.get('comment_text')
+            PostComment(indicated_post_id=post_id, parent_id=parent, user_id=user_id, comment_text=comment_text).save()
+            messages.success(self.request, "Comment successfully uploaded and is waiting for approval")
+            return redirect(f"{self.request.path}#textMessage")
+        else:
+            messages.warning(self.request, "Something went wrong")
+            return redirect(f"{self.request.path}#textMessage")
 
     def get_queryset(self):
         query = super(PostDetailView, self).get_queryset()
         return query.filter(isActive=True)
 
-
+# class CommentFormView(SuccessMessageMixin, CreateView):
+#     template_name = 'post/includes/comment_form_partial.html'
+#     model = PostComment
+#     form_class = CommentForm
+#     success_message = "Your form was successfully uploaded."
