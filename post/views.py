@@ -50,9 +50,3 @@ class PostDetailView(DetailView):
     def get_queryset(self):
         query = super(PostDetailView, self).get_queryset()
         return query.filter(isActive=True)
-
-# class CommentFormView(SuccessMessageMixin, CreateView):
-#     template_name = 'post/includes/comment_form_partial.html'
-#     model = PostComment
-#     form_class = CommentForm
-#     success_message = "Your form was successfully uploaded."
