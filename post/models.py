@@ -98,6 +98,7 @@ class PostCategory(models.Model):
 
 class PostComment(models.Model):
     indicated_post = models.ForeignKey(Post,
+                                       related_query_name='posts',
                                        on_delete=models.CASCADE
                                        , verbose_name="Post ")
     parent = models.ForeignKey('PostComment',
@@ -105,6 +106,7 @@ class PostComment(models.Model):
                                null=True,
                                blank=True,
                                on_delete=models.CASCADE,
+                               related_name='parents',
                                verbose_name='Parent comment')
     user = models.ForeignKey(User,
                              db_index=True,
