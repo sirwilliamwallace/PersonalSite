@@ -28,7 +28,7 @@ class PostDetailView(DetailView):
         comments = PostComment.objects.filter(isApproved=True,
                                               indicated_post_id=post.id,
                                               parent=None)
-        query_set['comments'] = comments.order_by('-createDate').prefetch_related('postcomment_set')
+        query_set['comments'] = comments.order_by('-createDate').prefetch_related('parents')
         query_set['comment_form'] = CommentForm()
         return query_set
 
@@ -38,9 +38,11 @@ class PostDetailView(DetailView):
         if comment_form.is_valid():
             data = comment_form.data
             user_id = request.user.id
-            parent = comment_form.cleaned_data.get('parentComment')
+            parent_id = comment_form.cleaned_data.get('parentId')
+            print(parent_id)
             comment_text = data.get('comment_text')
-            PostComment(indicated_post_id=post_id, parent_id=parent, user_id=user_id, comment_text=comment_text).save()
+            PostComment(indicated_post_id=post_id, parent_id=parent_id, user_id=user_id,
+                        comment_text=comment_text).save()
             messages.success(self.request, "Comment successfully uploaded and is waiting for approval")
             return redirect(f"{self.request.path}#textMessage")
         else:
