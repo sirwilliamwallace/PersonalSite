@@ -1,10 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, PostComment
 from .forms import CommentForm
