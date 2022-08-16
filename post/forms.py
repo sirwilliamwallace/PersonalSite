@@ -15,8 +15,13 @@ class CommentForm(forms.ModelForm):
         required=True,
         validators=[validators.ProhibitNullCharactersValidator, ]
     )
+    parentId = forms.IntegerField(widget=forms.HiddenInput(attrs={
+        "id": "parentComment",
+        "value": ""
+    }),
+        required=False,
+    )
 
     class Meta:
         model = PostComment
         fields = ('comment_text',)
-
