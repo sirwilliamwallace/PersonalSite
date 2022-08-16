@@ -19,3 +19,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = PostComment
         fields = ('comment_text',)
+
