@@ -56,140 +56,137 @@
                     <div class="line-mf"></div>
               </div>
             </div>
-            <div class="form-comments">
-              <div class="title-box-2">
-                <h3 class="title-left">
-                  Leave a Reply
-                </h3>
-              </div>
-              {% if request.user.is_authenticated %}
-                <form action="" class="form-mf" id="comment_form">
-                    {% csrf_token %}
-                    <div class="row">
-                        <input type="hidden" id="parent_id" value="">
-                        <div class="col-md-12 mb-3">
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                                {{ comment_form.commentText }}
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <a class="button button-a button-big button-rouded">Send Message</a>
-                        </div>
-                    </div>
-                </form>
+          <div class="form-comments">
+    <div class="title-box-2">
+        <h3 class="title-left">
+            Leave a Reply
+        </h3>
+    </div>
+              {% if messages %}
+                  <ul class="messages">
+                  {% for message in messages %}
+                      <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                  {% endfor %}
+              {% endif %}
+          {% if request.user.is_authenticated %}
+          
+              <form action="{% url 'post:post-detail' object.id object.slug %}" method="post" class="form-mf" id="comment_form">
+                  {% csrf_token %}
+                  {% include 'post/includes/comment_form_partial.html' %}
+              </form>
               {% else %}
                   <span class="alert alert-info">
                       <a href="{% url 'account:login' %}" target="_blank" class="bi-lock"> Login</a> is required in order to comment
                   </span>
               {% endif %}
-            </div>
-
-            <div class="box-comments" id="comments_area">
-              <div class="title-box-2">
-                <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
-              </div>
-              <ul class="list-comments">
-                {% for comment in comments %}
-                 <li>
-                 {% if comment.user.avatar %}
-                     <div class="comment-avatar">
-                             {% thumbnail comment.user.avatar "80x80" quality=60 as im %}
-                                 <img src="{{ im.url }}" alt="{{ reply.user.username }}">
-                             {% endthumbnail %}
-                     </div>
-                     {% else %}
-                     <div class="comment-avatar">
-                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
-                     </div>
-                 {% endif %}
-                     <div class="comment-details">
-                        <h4 class="comment-author">{{ comment.user }}</h4>
-                        <span>{{ comment.createDate }}</span>
-                        <p>
-                            {{ comment.comment_text }}
-                        </p>
-                        <a class="btn"><i class="bi bi-reply">Reply</i></a>
-                  </div>
-
-                </li>
-
-                        {% for reply in comment.postcomment_set.all %}
-                            <li class="comment-children">
-                                 {% if reply.user.avatar %}
-                                     <div class="comment-avatar">
-                                     {% thumbnail reply.user.avatar "80x80" quality=60 as im %}
-                                         <img src="{{ im.url }}" alt="{{ reply.user.username }}">
-                                     {% endthumbnail %}
-                                     </div>
-                                     {% else %}
-                                     <div class="comment-avatar">
-                                         <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
-                                     </div>
-                                 {% endif %}
-                                     <div class="comment-details">
-                                        <h4 class="comment-author">{{ reply.user }}</h4>
-                                        <span>{{ reply.createDate }}</span>
-                                        <p>
-                                            {{ reply.comment_text }}
-                                        </p>
-                                  </div>
-                            </li>
-
-                        {% endfor %}
-                {% endfor %}
-
-              </ul>
-            </div>
           </div>
-          <div class="col-md-4">
-            <div class="widget-sidebar sidebar-search">
-              <h5 class="sidebar-title">Search</h5>
-              <div class="sidebar-content">
-                <form>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                    <span class="input-group-btn">
-                      <a class="btn btn-secondary btn-search" type="button">
-                        <span class="bi bi-search"></span>
-                      </a>
-                    </span>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="widget-sidebar">
-              <h5 class="sidebar-title">Recent Post</h5>
-              <div class="sidebar-content">
-                <ul class="list-sidebar">
-                    {% for latest_post in latest_posts %}
-                      <li>
-                            <a href="{{ latest_post.get_absolute_url }}">{{ latest_post.title }}</a>
-                      </li>
-                    {% endfor %}
-                 </ul>
-              </div>
-            </div>
-            <div class="widget-sidebar widget-tags">
-              <h5 class="sidebar-title">Categories</h5>
-              <div class="sidebar-content">
-                    {# TODO: make link out of categoris #}
-                  <ul>
-                    {% for category in post.category.all %}
-                  <li>
-                    <a class="category color-text-a">{{ category.title }}</a>
-                  </li>
-                    {% endfor %}
+                  <div class="box-comments" id="comments_area">
+                      <div class="title-box-2">
+                          <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
+                      </div>
+                      <ul class="list-comments">
+                          {% for comment in comments %}
+                              <li>
+                                  {% if comment.user.avatar %}
+                                      <div class="comment-avatar">
+                                          {% thumbnail comment.user.avatar "80x80" quality=60 as im %}
+                                              <img src="{{ im.url }}" alt="{{ reply.user.username }}">
+                                          {% endthumbnail %}
+                                      </div>
+                                  {% else %}
+                                      <div class="comment-avatar">
+                                          <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
+                                      </div>
+                                  {% endif %}
+                                  <div class="comment-details">
+                                      <h4 class="comment-author">{{ comment.user }}</h4>
+                                      <span>{{ comment.createDate }}</span>
+                                      <p>
+                                          {{ comment.comment_text }}
+                                      </p>
+                                      <a class="btn"><i class="bi bi-reply">Reply</i></a>
+                                  </div>
 
-                </ul>
+                              </li>
+                      </ul>
+                  </div>
+              </form>
+
+                              {% for reply in comment.postcomment_set.all %}
+                                  <li class="comment-children">
+                                      {% if reply.user.avatar %}
+                                          <div class="comment-avatar">
+                                              {% thumbnail reply.user.avatar "80x80" quality=60 as im %}
+                                                  <img src="{{ im.url }}" alt="{{ reply.user.username }}">
+                                              {% endthumbnail %}
+                                          </div>
+                                      {% else %}
+                                          <div class="comment-avatar">
+                                              <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
+                                          </div>
+                                      {% endif %}
+                                      <div class="comment-details">
+                                          <h4 class="comment-author">{{ reply.user }}</h4>
+                                          <span>{{ reply.createDate }}</span>
+                                          <p>
+                                              {{ reply.comment_text }}
+                                          </p>
+                                      </div>
+                                  </li>
+
+                              {% endfor %}
+                          {% endfor %}
+
+                      </ul>
+                  </div>
+          </div>
+              <div class="col-md-4">
+                  <div class="widget-sidebar sidebar-search">
+                      <h5 class="sidebar-title">Search</h5>
+                      <div class="sidebar-content">
+                          <form>
+                              <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+                                  <span class="input-group-btn">
+                                      <a class="btn btn-secondary btn-search" type="button">
+                                          <span class="bi bi-search"></span>
+                                      </a>
+                                  </span>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="widget-sidebar">
+                      <h5 class="sidebar-title">Recent Post</h5>
+                      <div class="sidebar-content">
+                          <ul class="list-sidebar">
+                              {% for latest_post in latest_posts %}
+                                  <li>
+                                      <a href="{{ latest_post.get_absolute_url }}">{{ latest_post.title }}</a>
+                                  </li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="widget-sidebar widget-tags">
+                      <h5 class="sidebar-title">Categories</h5>
+                      <div class="sidebar-content">
+                          {# TODO: make link out of categoris #}
+                          <ul>
+                              {% for category in post.category.all %}
+                                  <li>
+                                      <a class="category color-text-a">{{ category.title }}</a>
+                                  </li>
+                              {% endfor %}
+
+                          </ul>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
         </div>
-      </div>
     </section>
-<!-- End Blog Single Section -->
+      <!-- End Blog Single Section -->
 
   </main><!-- End #main -->
 {% endblock %}
