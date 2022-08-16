@@ -63,28 +63,30 @@
                 </h3>
               </div>
               {% if request.user.is_authenticated %}
-                <form class="form-mf">
-                <div class="row">
-                  <div class="col-md-12 mb-3">
-                  </div>
-                  <div class="col-md-12 mb-3">
-                    <div class="form-group">
-                      <textarea id="textMessage" class="form-control input-mf" placeholder="Comment *" name="message" cols="45" rows="8" required></textarea>
+                <form action="" class="form-mf" id="comment_form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <input type="hidden" id="parent_id" value="">
+                        <div class="col-md-12 mb-3">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                                {{ comment_form.commentText }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <a class="button button-a button-big button-rouded">Send Message</a>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-12">
-                    <a class="button button-a button-big button-rouded" onclick="sendPostComment({{ post.id }})">Send Message</a>
-                  </div>
-                </div>
-              </form>
+                </form>
               {% else %}
                   <span class="alert alert-info">
-                    <a href="{% url 'account:login' %}" target="_blank" class="bi-lock"> Login</a> is required in order to comment
+                      <a href="{% url 'account:login' %}" target="_blank" class="bi-lock"> Login</a> is required in order to comment
                   </span>
               {% endif %}
             </div>
 
-            <div class="box-comments">
+            <div class="box-comments" id="comments_area">
               <div class="title-box-2">
                 <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
               </div>
@@ -99,7 +101,6 @@
                      </div>
                      {% else %}
                      <div class="comment-avatar">
-                    {#TODO: decrease avatar's size#}
                          <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
                      </div>
                  {% endif %}
@@ -109,7 +110,7 @@
                         <p>
                             {{ comment.comment_text }}
                         </p>
-                        <a class="btn" onclick="fillParentId({{ comment.id }})"><i class="bi bi-reply">Reply</i></a>
+                        <a class="btn"><i class="bi bi-reply">Reply</i></a>
                   </div>
 
                 </li>
@@ -150,9 +151,9 @@
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
                     <span class="input-group-btn">
-                      <button class="btn btn-secondary btn-search" type="button">
+                      <a class="btn btn-secondary btn-search" type="button">
                         <span class="bi bi-search"></span>
-                      </button>
+                      </a>
                     </span>
                   </div>
                 </form>
