@@ -34,7 +34,7 @@ $ python3 manage.py runserver
 # You should complete the admin panel's information in order for thw website to function
 # <hr />
 # TODO: 
-- [ ] Comments section
+- [x] Comments section
 - [ ] Complete Search section in articles
 - [ ] Complete README
 
