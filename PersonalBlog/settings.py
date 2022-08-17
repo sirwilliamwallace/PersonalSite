@@ -45,12 +45,14 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_render_partial',
     'sorl.thumbnail',
+
     'custom_template_tag.apps.CustomTemplateTagConfig',
     # My apps
     'post',
     'home',
     'contact',
     'user_accounts',
+    'user_panel',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +170,6 @@ EMAIL_PORT = credentials.get('EMAIL_PORT')
 EMAIL_HOST_USER = credentials.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = credentials.get('EMAIL_HOST_PASSWORD')
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
