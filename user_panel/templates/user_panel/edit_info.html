@@ -1,0 +1,42 @@
+{% extends 'main/_layout.html' %}
+{% load render_partial %}
+
+{% block title %}
+    Edit user information
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {% render_partial 'user_panel.views.DashboardViewPartial' %}
+            </div>
+            <div class="col-md-8">
+                <form class="form-group" action="{% url 'user_panel:dashboard' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="container-fluid">
+                    {% for edit_form in form %}
+                        {{ edit_form }}
+                    {% endfor %}
+
+                </div>
+                    {% if form.errors %}
+                        <li class="alert alert-danger">{{ form.errors }}</li>
+                    {% endif %}
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+
+                    {% endif %}
+                    <button type="submit" class="btn btn-close-white">
+                        Submit Info
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

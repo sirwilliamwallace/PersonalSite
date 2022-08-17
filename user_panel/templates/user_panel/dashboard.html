@@ -1,0 +1,14 @@
+{% extends 'main/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% render_partial 'user_panel.views.DashboardViewPartial' %}
+            <div class="col-md-8">
+                <p>this is user dashboard</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
