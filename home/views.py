@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 
-from .models import Hero, SiteSettings, Profile
+from .models import Hero, SiteSettings, Profile, Seo
 
 
 # Create your views here.
@@ -58,3 +58,13 @@ class HeroComponentView(TemplateView):
         base['name'], base['skills'], base[
             'bg_image'] = hero.name.get_full_name() if hero.name.get_full_name() else hero.name.username, hero.skills, hero.bg_image
         return base
+
+
+class SeoModelView(TemplateView):
+    template_name = "main/components/meta_tags_components.html"
+
+    def get_context_data(self, **kwargs):
+        base_context = super(SeoModelView, self).get_context_data(**kwargs)
+        base_context['seo']: Seo = Seo.objects.filter(isMain=True).prefetch_related('keywords_connection')
+
+        return base_context
