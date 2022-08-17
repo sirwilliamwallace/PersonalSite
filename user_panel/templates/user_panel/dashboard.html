@@ -1,0 +1,18 @@
+{% extends 'main/_layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+
+            {% include 'user_panel/components/messages.html' %}
+            <div class="col-md-8">
+                <div class="col-md-4">
+                    {% render_partial 'user_panel.views.DashboardViewPartial' %}
+                </div>
+            </div>
+        </div>
+        <div class="contact-mf"></div>
+    </div>
+{% endblock %}

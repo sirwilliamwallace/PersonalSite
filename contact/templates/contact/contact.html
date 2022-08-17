@@ -31,8 +31,9 @@
                                   {% for message in messages %}
                                         <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
                                   {% endfor %}
-                              {% endif %}
                             </ul>
+
+                              {% endif %}
                           </div>
                           <div class="col-md-12 text-center">
                             <button type="submit" class="button button-a button-big button-rouded">Send Message</button>

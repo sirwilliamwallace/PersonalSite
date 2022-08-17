@@ -1,0 +1,13 @@
+{% load thumbnail %}
+{% load static %}
+{#<div class="col-2 pr-0 float-sm-end">#}
+<div class="mb-4">
+    {% if user.avatar %}
+        {% thumbnail user.avatar "400x300" as im %}
+            <img class="rounded-circle z-depth-1-half avatar-pic" src="{{ im.url }}" alt="{{ user.profile }}">
+        {% endthumbnail %}
+    {% else %}
+        <img class="rounded-circle z-depth-1-half avatar-pic" style="width: 150px;" src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ user.username }}">
+    {% endif %}
+
+</div>
