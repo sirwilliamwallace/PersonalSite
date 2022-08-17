@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hero, Skills, SiteSettings, Profile
+from .models import Hero, Skills, SiteSettings, Profile, Seo, Keywords
 
 
 # Register your models here.
@@ -21,3 +21,14 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Seo)
+class SeoAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'isMain',)
+    list_editable = ('isMain',)
+
+
+@admin.register(Keywords)
+class KeywordAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'keyword',)
