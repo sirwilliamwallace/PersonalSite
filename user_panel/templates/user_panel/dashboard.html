@@ -5,10 +5,14 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            {% render_partial 'user_panel.views.DashboardViewPartial' %}
+
+            {% include 'user_panel/components/messages.html' %}
             <div class="col-md-8">
-                <p>this is user dashboard</p>
+                <div class="col-md-4">
+                    {% render_partial 'user_panel.views.DashboardViewPartial' %}
+                </div>
             </div>
         </div>
+        <div class="contact-mf"></div>
     </div>
 {% endblock %}
