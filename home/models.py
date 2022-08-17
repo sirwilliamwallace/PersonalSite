@@ -1,7 +1,3 @@
-from operator import mod
-from pyexpat import model
-from statistics import mode
-from tabnanny import verbose
 from user_accounts.models import User
 from django.db import models
 
@@ -42,6 +38,19 @@ class SiteSettings(models.Model):
         return f"Logo number {self.id}"
 
 
+class Seo(models.Model):
+    keywords = models.CharField(max_length=50, verbose_name="Keywords Meta Tag")
+    description = models.TextField(verbose_name="Description Meta Tag")
+    isMain = models.BooleanField(verbose_name="Main Meta Tags for Site")
+
+    def __str__(self):
+        return f"Seo settings number {self.id}"
+
+    class Meta:
+        verbose_name = "Meta tag"
+        verbose_name_plural = "Seo Meta tags"
+
+
 class Profile(models.Model):
     avatar = models.ImageField(verbose_name='Avatar ')
     name = models.CharField(max_length=100, verbose_name='Name ')
@@ -77,7 +86,8 @@ class GetInTouch(models.Model):
         max_length=150, verbose_name="Phone Number", null=True, blank=True)
     email_address = models.EmailField(
         verbose_name="Email Address ", null=True, blank=True)
-    social_media = models.ManyToManyField(SocialMediaAccounts, verbose_name="Social media accounts", blank=True, related_name='platforms')
+    social_media = models.ManyToManyField(SocialMediaAccounts, verbose_name="Social media accounts", blank=True,
+                                          related_name='platforms')
     isActive = models.BooleanField(default=False, verbose_name="Be shown in contact section")
 
     class Meta:
