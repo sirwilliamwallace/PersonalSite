@@ -13,6 +13,7 @@
           <li><a class="nav-link scrollto" href="{% url 'home:index_page' %}#services">Services</a></li>
           <li><a class="nav-link scrollto " href="{% url 'home:index_page' %}#blog">Blog</a></li>
             {% if request.user.is_authenticated %}
+          <li><a class="nav-link scrollto " href="{% url 'user_panel:dashboard' %}">Dashboard</a></li>
           <li><a class="nav-link scrollto " href="{% url 'account:logout' %}">Logout</a></li>
             {% else %}
           <li><a class="nav-link scrollto " href="{% url 'account:register' %}">Register</a></li>
