@@ -1,0 +1,7 @@
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+{% if seo.isMain %}
+    <meta  name="description" content="{{ seo.description }}">
+    <meta name="keywords" content="{% for seo_keywords in seo.keywords_connection.all %}{{ seo_keywords }},{% endfor %}" >
+{% endif %}

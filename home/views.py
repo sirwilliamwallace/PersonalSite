@@ -65,6 +65,5 @@ class SeoModelView(TemplateView):
 
     def get_context_data(self, **kwargs):
         base_context = super(SeoModelView, self).get_context_data(**kwargs)
-        base_context['seo']: Seo = Seo.objects.filter(isMain=True).prefetch_related('keywords_connection')
-
+        base_context['seo']: Seo = Seo.objects.filter(isMain=True).prefetch_related('keywords_connection').first()
         return base_context
