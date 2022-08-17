@@ -3,13 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% render_partial 'home.views.SeoModelView' %}
   <title>
       {% block title %}{% endblock title %}
   </title>
-  <meta content="My Personal Website Powered By django" name="description">
-  <meta content="PersonalSite" name="keywords">
   {% include 'main/includes/header_references.html' with logo=settings.logo %}
 </head>
 <body>
