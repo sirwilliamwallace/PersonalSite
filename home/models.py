@@ -38,19 +38,6 @@ class SiteSettings(models.Model):
         return f"Logo number {self.id}"
 
 
-class Seo(models.Model):
-    keywords = models.CharField(max_length=50, verbose_name="Keywords Meta Tag")
-    description = models.TextField(verbose_name="Description Meta Tag")
-    isMain = models.BooleanField(verbose_name="Main Meta Tags for Site")
-
-    def __str__(self):
-        return f"Seo settings number {self.id}"
-
-    class Meta:
-        verbose_name = "Meta tag"
-        verbose_name_plural = "Seo Meta tags"
-
-
 class Profile(models.Model):
     avatar = models.ImageField(verbose_name='Avatar ')
     name = models.CharField(max_length=100, verbose_name='Name ')
@@ -96,3 +83,27 @@ class GetInTouch(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.phone_number} - {self.email_address}"
+
+
+class Keywords(models.Model):
+    keyword = models.CharField(max_length=20, verbose_name="Keywords Meta Tag")
+
+    def __str__(self):
+        return self.keyword
+
+    class Meta:
+        verbose_name = "Keyword"
+        verbose_name_plural = "Keywords"
+
+
+class Seo(models.Model):
+    keywords_connection = models.ManyToManyField('Keywords', verbose_name='Keywords', related_name='keywords_for_seo')
+    description = models.TextField(verbose_name="Description Meta Tag")
+    isMain = models.BooleanField(default=False, verbose_name="Main Meta Tags for Site")
+
+    def __str__(self):
+        return f"Seo settings number {self.id}"
+
+    class Meta:
+        verbose_name = "Meta tag"
+        verbose_name_plural = "Seo Meta tags"
