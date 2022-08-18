@@ -5,6 +5,7 @@ from django.shortcuts import redirect, reverse,render
 from user_accounts.models import User
 from .forms import EditProfileModelForm, ChangePasswordForm
 from django.contrib.auth import logout
+from tools.send_email_tool import send_email
 
 class DashboardView(TemplateView):
     template_name = "user_panel/dashboard.html"
@@ -55,6 +56,7 @@ class ChangePasswordView(View):
                 user.set_password(password)
                 logout(request)
                 messages.success(request, 'Your password was successfully updated.')
+                send_mail()
                 return redirect(reverse('user_panel:change-password'))
             else:
                 change_password_form.add_error('password', 'Password is not correct')
