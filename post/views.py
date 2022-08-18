@@ -1,8 +1,9 @@
 from django.contrib import messages
-from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.shortcuts import redirect, render
+from django.views.generic import ListView, DetailView, View
 from .models import Post, PostComment
-from .forms import CommentForm
+from .forms import CommentForm, SearchForm
+
 
 
 class PostsListView(ListView):
@@ -33,13 +34,12 @@ class PostDetailView(DetailView):
         return query_set
 
     def post(self, request, post_id, slug):
-        # TODO: implement parents
         comment_form = CommentForm(self.request.POST)
         if comment_form.is_valid():
             data = comment_form.data
             user_id = request.user.id
             parent_id = comment_form.cleaned_data.get('parentId')
-            print(parent_id)
+            # print(parent_id)
             comment_text = data.get('comment_text')
             PostComment(indicated_post_id=post_id, parent_id=parent_id, user_id=user_id,
                         comment_text=comment_text).save()
@@ -52,3 +52,16 @@ class PostDetailView(DetailView):
     def get_queryset(self):
         query = super(PostDetailView, self).get_queryset()
         return query.filter(isActive=True)
+
+
+class SearchPostsView(View):
+    def get(self, request):
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            data = form.cleaned_data
+            query = data.get('search')
+            if query is not None:
+                posts = Post.objects.filter(title__icontains=query)
+                return render(request, 'post/search_results.html', {'posts': posts})
+            return render(request, 'post/search_results.html', {'posts': []})
+        return render(request, 'post/includes/search_component.html', {'form': form})
