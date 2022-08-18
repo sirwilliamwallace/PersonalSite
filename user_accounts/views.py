@@ -157,7 +157,14 @@ class ResetPasswordView(View):
             user.email_verification_code = get_random_string(72)
             user.is_active = True
             user.save()
+            send_email(
+                subject="Your password has changed",
+                to=user.email,
+                context={'user': user},
+                template_name='mail_templates/password_changed.html'
+            )
             messages.success(self.request, "Password successfully changed.")
             return redirect(reverse('account:login'))
         context = {"form": form}
         return render(request, 'user_accounts/reset_password.html', context)
+# complete panel
