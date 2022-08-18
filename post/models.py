@@ -3,8 +3,28 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db.models import Q
 
 User = get_user_model()
+
+#  Search functionality for posts
+
+
+class PostManager(models.Manager):
+    def get_active_posts(self):
+        query_set = self.get_queryset().filter(isActive=True)
+        return query_set
+    def search(self, query):
+        lookup = (
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query) |
+            Q(slug__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__title__icontains=query) |
+            Q(category__url_title__icontains=query)
+        )
+        return self.get_queryset().filter(lookup, isActive=True).distinct()
 
 
 class Post(models.Model):
@@ -17,8 +37,7 @@ class Post(models.Model):
                                       verbose_name='Categories'
                                       )
     slug = models.SlugField(max_length=300,
-                            default=""
-                            , null=False,
+                            default="", null=False,
                             db_index=True,
                             unique=True,
                             verbose_name='Slug (Auto-complete)'
@@ -46,6 +65,8 @@ class Post(models.Model):
                                    verbose_name='Active / Inactive')
     isDelete = models.BooleanField(verbose_name='Deleted')
 
+    objects = PostManager()
+
     def __str__(self):
         return self.title
 
@@ -55,6 +76,8 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+    
+
 
     class Meta:
         ordering = ['-createDate']
@@ -99,8 +122,7 @@ class PostCategory(models.Model):
 class PostComment(models.Model):
     indicated_post = models.ForeignKey(Post,
                                        related_query_name='posts',
-                                       on_delete=models.CASCADE
-                                       , verbose_name="Post ")
+                                       on_delete=models.CASCADE, verbose_name="Post ")
     parent = models.ForeignKey('PostComment',
                                db_index=True,
                                null=True,
