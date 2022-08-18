@@ -1,187 +1,179 @@
 {% extends 'main/_layout.html' %}
 {% load static %}
 {% load thumbnail %}
+{% load render_partial %}
 {% load count_comments %}
 {% block content %}
-    <main id="main">
+<main id="main">
 
-        <!-- ======= Blog Single Section ======= -->
-        <section class="blog-wrapper sect-pt4" id="blog">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="post-box">
-                            {% if post.image %}
-                                <div class="post-thumb">
-                                    {% thumbnail post.image "1000x666" quality=95 as im %}
-                                        <img src="{{ im.url }}" class="img-fluid" alt="{{ post.title }}">
+    <!-- ======= Blog Single Section ======= -->
+    <section class="blog-wrapper sect-pt4" id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="post-box">
+                        {% if post.image %}
+                        <div class="post-thumb">
+                            {% thumbnail post.image "1000x666" quality=95 as im %}
+                            <img src="{{ im.url }}" class="img-fluid" alt="{{ post.title }}">
+                            {% endthumbnail %}
+                        </div>
+                        {% else %}
+                        <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}"
+                            width="100%" height="42%">
+                        {% endif %}
+                        <div class="post-meta">
+                            <h1 class="article-title">{{ post.title }}</h1>
+                            <ul>
+                                <li>
+                                    <span class="bi bi-person"></span>
+                                    <a>{{ post.author }}</a>
+                                </li>
+                                <li>
+                                    <span class="bi bi-tag"></span>
+                                    <a>{{ post.post_tags.first }}</a>
+                                </li>
+                                <li>
+                                    <span class="bi bi-chat-left-text"></span>
+                                    <a>{% count_comments comments.count comments.prefetch_related.count %}</a>
+                                </li>
+                                <br>
+                                <li>
+                                    Created :
+                                    <span class="bi bi-emoji-smile"></span>
+                                    <i class="color-a">{{ post.createDate }}</i>
+                                </li>
+                                <br>
+                                <li>
+                                    Last updated :
+                                    <span class="bi bi-emoji-smile"></span>
+                                    <i class="color-a">{{ post.updateDate }}</i>
+                                </li>
+                                <br>
+
+                            </ul>
+                        </div>
+                        <div class="article-content">
+                            {{ post.content|safe }}
+                            <div class="line-mf" id="focusContextMessage"></div>
+                        </div>
+                    </div>
+                    <div class="form-comments">
+                        <div class="title-box-2">
+                            <h3 class="title-left">
+                                Leave a Reply
+                            </h3>
+                        </div>
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'post:post-detail' object.id object.slug %}" method="post" class="form-mf"
+                            id="comment_form">
+                            {% csrf_token %}
+                            {% include 'post/includes/comment_form_partial.html' %}
+                        </form>
+                        {% else %}
+                        <span class="alert alert-info">
+                            <a href="{% url 'account:login' %}" target="_blank" class="bi-lock"> Login</a> is required
+                            in order to comment
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="box-comments" id="comments_area">
+                        <div class="title-box-2">
+                            <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
+                        </div>
+                        <ul class="list-comments">
+                            {% for comment in comments %}
+                            <li>
+                                {% if comment.user.avatar %}
+                                <div class="comment-avatar">
+                                    {% thumbnail comment.user.avatar "80x80" quality=60 as im %}
+                                    <img src="{{ im.url }}" alt="{{ reply.user.username }}">
                                     {% endthumbnail %}
                                 </div>
-                            {% else %}
-                                <img src="{% static 'assets/img/no-photo-available-icon-13.jpg' %}" alt="{{ post.title }}" width="100%" height="42%">
-                            {% endif %}
-                            <div class="post-meta">
-                                <h1 class="article-title">{{ post.title }}</h1>
-                                <ul>
-                                    <li>
-                                        <span class="bi bi-person"></span>
-                                        <a>{{ post.author }}</a>
-                                    </li>
-                                    <li>
-                                        <span class="bi bi-tag"></span>
-                                        <a>{{ post.post_tags.first }}</a>
-                                    </li>
-                                    <li>
-                                        <span class="bi bi-chat-left-text"></span>
-                                        <a>{% count_comments comments.count comments.prefetch_related.count %}</a>
-                                    </li>
-                                    <br>
-                                    <li>
-                                        Created :
-                                        <span class="bi bi-emoji-smile"></span>
-                                        <i class="color-a">{{ post.createDate }}</i>
-                                    </li>
-                                    <br>
-                                    <li>
-                                        Last updated :
-                                        <span class="bi bi-emoji-smile"></span>
-                                        <i class="color-a">{{ post.updateDate }}</i>
-                                    </li>
-                                    <br>
-
-                                </ul>
-                            </div>
-                            <div class="article-content">
-                                {{ post.content|safe }}
-                                <div class="line-mf" id="focusContextMessage"></div>
-                            </div>
-                        </div>
-                        <div class="form-comments">
-                            <div class="title-box-2">
-                                <h3 class="title-left">
-                                    Leave a Reply
-                                </h3>
-                            </div>
-                            {% if messages %}
-                                <ul class="messages">
-                                    {% for message in messages %}
-                                        <li {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                                <form action="{% url 'post:post-detail' object.id object.slug %}" method="post" class="form-mf" id="comment_form">
-                                    {% csrf_token %}
-                                    {% include 'post/includes/comment_form_partial.html' %}
-                                </form>
-                            {% else %}
-                                <span class="alert alert-info">
-                                    <a href="{% url 'account:login' %}" target="_blank" class="bi-lock"> Login</a> is required in order to comment
-                                </span>
-                            {% endif %}
-                        </div>
-                        <div class="box-comments" id="comments_area">
-                            <div class="title-box-2">
-                                <h4 class="title-comments title-left">Comments ({% count_comments comments.count comments.prefetch_related.count %})</h4>
-                            </div>
-                            <ul class="list-comments">
-                                {% for comment in comments %}
-                                    <li>
-                                        {% if comment.user.avatar %}
-                                            <div class="comment-avatar">
-                                                {% thumbnail comment.user.avatar "80x80" quality=60 as im %}
-                                                    <img src="{{ im.url }}" alt="{{ reply.user.username }}">
-                                                {% endthumbnail %}
-                                            </div>
-                                        {% else %}
-                                            <div class="comment-avatar">
-                                                <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
-                                            </div>
-                                        {% endif %}
-                                        <div class="comment-details">
-                                            <h4 class="comment-author">{{ comment.user }}</h4>
-                                            <span>{{ comment.createDate }}</span>
-                                            <p>
-                                                {{ comment.comment_text }}
-                                            </p>
-                                            <a class="btn" id="replyButton" onclick="fillParentId({{ comment.id }})"><i class="bi bi-reply">Reply</i></a>
-                                        </div>
-                                    </li>
-                                    <div>
-                                            {% for reply in comment.parents.all %}
-                                                <li class="comment-children">
-                                                    {% if reply.user.avatar %}
-                                                        <div class="comment-avatar">
-                                                            {% thumbnail reply.user.avatar "80x80" quality=60 as im %}
-                                                                <img src="{{ im.url }}" alt="{{ reply.user.username }}">
-                                                            {% endthumbnail %}
-                                                        </div>
-                                                    {% else %}
-                                                        <div class="comment-avatar">
-                                                            <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}" alt="{{ reply.user.username }}">
-                                                        </div>
-                                                    {% endif %}
-                                                    <div class="comment-details">
-                                                        <h4 class="comment-author">{{ reply.user }}</h4>
-                                                        <span>{{ reply.createDate }}</span>
-                                                        <p>
-                                                            {{ reply.comment_text }}
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                </div>
-                                            {% endfor %}
-                                {% endfor %}
+                                {% else %}
+                                <div class="comment-avatar">
+                                    <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}"
+                                        alt="{{ reply.user.username }}">
                                 </div>
-
-
-                    </div>
-                    <div class="col-md-4">
-                        <div class="widget-sidebar sidebar-search">
-                            <h5 class="sidebar-title">Search</h5>
-                            <div class="sidebar-content">
-                                <form>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                                        <span class="input-group-btn">
-                                            <a class="btn btn-secondary btn-search" type="button">
-                                                <span class="bi bi-search"></span>
-                                            </a>
-                                        </span>
+                                {% endif %}
+                                <div class="comment-details">
+                                    <h4 class="comment-author">{{ comment.user }}</h4>
+                                    <span>{{ comment.createDate }}</span>
+                                    <p>
+                                        {{ comment.comment_text }}
+                                    </p>
+                                    <a class="btn" id="replyButton" onclick="fillParentId({{ comment.id }})"><i
+                                            class="bi bi-reply">Reply</i></a>
+                                </div>
+                            </li>
+                            <div>
+                                {% for reply in comment.parents.all %}
+                                <li class="comment-children">
+                                    {% if reply.user.avatar %}
+                                    <div class="comment-avatar">
+                                        {% thumbnail reply.user.avatar "80x80" quality=60 as im %}
+                                        <img src="{{ im.url }}" alt="{{ reply.user.username }}">
+                                        {% endthumbnail %}
                                     </div>
-                                </form>
+                                    {% else %}
+                                    <div class="comment-avatar">
+                                        <img src="{% static 'assets/img/no-profile-picture-icon-2.png' %}"
+                                            alt="{{ reply.user.username }}">
+                                    </div>
+                                    {% endif %}
+                                    <div class="comment-details">
+                                        <h4 class="comment-author">{{ reply.user }}</h4>
+                                        <span>{{ reply.createDate }}</span>
+                                        <p>
+                                            {{ reply.comment_text }}
+                                        </p>
+                                    </div>
+                                </li>
                             </div>
+                            {% endfor %}
+                            {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {% render_partial 'post.views.SearchPostsView' %}
+                    <div class="widget-sidebar">
+                        <h5 class="sidebar-title">Recent Post</h5>
+                        <div class="sidebar-content">
+                            <ul class="list-sidebar">
+                                {% for latest_post in latest_posts %}
+                                <li>
+                                    <a href="{{ latest_post.get_absolute_url }}">{{ latest_post.title }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
-                        <div class="widget-sidebar">
-                            <h5 class="sidebar-title">Recent Post</h5>
-                            <div class="sidebar-content">
-                                <ul class="list-sidebar">
-                                    {% for latest_post in latest_posts %}
-                                        <li>
-                                            <a href="{{ latest_post.get_absolute_url }}">{{ latest_post.title }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="widget-sidebar widget-tags">
-                            <h5 class="sidebar-title">Categories</h5>
-                            <div class="sidebar-content">
-                                {# TODO: make link out of categoris #}
-                                <ul>
-                                    {% for category in post.category.all %}
-                                        <li>
-                                            <a class="category color-text-a">{{ category.title }}</a>
-                                        </li>
-                                    {% endfor %}
-
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="widget-sidebar widget-tags">
+                        <h5 class="sidebar-title">Categories</h5>
+                        <div class="sidebar-content">
+                            {# TODO: make link out of categoris #}
+                            <ul>
+                                {% for category in post.category.all %}
+                                <li>
+                                    <a class="category color-text-a">{{ category.title }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
-        </section>
-        <!-- End Blog Single Section -->
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Single Section -->
 
-    </main><!-- End #main -->
+</main><!-- End #main -->
 {% endblock %}
