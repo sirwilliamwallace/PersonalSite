@@ -56,7 +56,12 @@ class ChangePasswordView(View):
                 user.set_password(password)
                 logout(request)
                 messages.success(request, 'Your password was successfully updated.')
-                send_mail()
+                send_email(
+                    subject="Your password has changed",
+                    to=user.email,
+                    context={'user': user},
+                    template_name='mail_templates/password_changed.html'
+                )
                 return redirect(reverse('user_panel:change-password'))
             else:
                 change_password_form.add_error('password', 'Password is not correct')
