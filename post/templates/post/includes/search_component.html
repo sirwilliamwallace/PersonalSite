@@ -1,0 +1,17 @@
+<div class="widget-sidebar sidebar-search">
+    <h5 class="sidebar-title">Search</h5>
+    <div class="sidebar-content">
+        <form action="{% url 'post:search' %}" method="get">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    {{ form.search }}
+                    <button class="btn btn-secondary btn-search" type="submit">
+                        <span class="bi bi-search">
+                    </button>
+                    </span>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
