@@ -57,3 +57,53 @@ class EditProfileModelForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'avatar',)
+
+
+class ChangePasswordForm(forms.Form):
+    current_password = forms.CharField(
+        label="Current password",
+        label_suffix="",
+        widget=forms.PasswordInput(attrs={
+            "type": "password",
+            "class": "form-control-lg",
+            "placeholder": "Your Current Password", }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
+    password = forms.CharField(
+        label="New Password",
+        label_suffix="",
+        widget=forms.PasswordInput(attrs={
+            "type": "password",
+            "class": "form-control-lg",
+            "placeholder": "Your New Password", }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
+
+    confirm_password = forms.CharField(
+        label="Confirm New Password",
+        label_suffix="",
+        widget=forms.PasswordInput(attrs={
+            "type": "password",
+            "class": "form-control-lg",
+            "placeholder": "Confirm Your Password",
+        }
+        ),
+        validators=[
+            validators.MinLengthValidator(8),
+        ]
+    )
+
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password == confirm_password:
+            return confirm_password
+        raise ValidationError('Passwords do not match')
+
