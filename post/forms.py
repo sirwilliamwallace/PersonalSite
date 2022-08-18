@@ -25,3 +25,19 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = PostComment
         fields = ('comment_text',)
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(widget=forms.TextInput(attrs={
+        "name": "search",
+        "id": "search",
+        "class": "form-control",
+        "placeholder": "Search for...",
+        "aria-label": "Search for...",
+    }),
+        required=True,
+        validators=[validators.ProhibitNullCharactersValidator, ]
+    )
+
+    class Meta:
+        fields = ('search',)
