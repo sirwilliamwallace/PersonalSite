@@ -66,7 +66,7 @@ class ChangePasswordView(View):
             else:
                 change_password_form.add_error('password', 'Password is not correct')
         context = {
-            "form": edit_profile_form
+            "form": change_password_form
         }        
         return render(request, 'user_panel/change_password.html', context)
 
