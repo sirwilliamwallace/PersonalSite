@@ -24,7 +24,7 @@ source venv/bin/activate # activates the virtual environment
 ```bash
 pip install -r requirements.txt # installs the requirements
 ```
-### In order for the project to work properly, you will need to create a file named `settings.py` in the root directory of the project. This file will contain the settings for the project. The settings will be stored in a dictionary and will be imported into the project's settings. :
+### In order for the project to work properly, you will need to create a file named `settings_creds.json` in the root directory of the project. This file will contain the settings for the project. The settings will be stored in a dictionary and will be imported into the project's settings. :
 
 ### Some of the settings that you will need to set are:
 #
