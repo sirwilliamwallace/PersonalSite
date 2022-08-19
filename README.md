@@ -5,6 +5,10 @@ An advanced personal website built with [Django Framework](https://www.djangopro
 
 ## Description
 #### This project is an<i> Advanced Personal Website</i> built with the <b>[Django Framework](https://www.djangoproject.com/).</b> This project is not developed to be a complete website, but rather a demonstration of the capabilities of the framework. The website offers a variety of features such as Dynamic site setting including even SEO related features.  A simple CMS is also included to allow the user to manage their Information. A mailing system is also included in the project, However this is not fully implemented yet, but In my next project which is probably an encrypted chat application, I will implement a fully encrypted chat system. And the mailing system will be implemented with major features for authentication purposes, I have optimized the database queries as much as i could,Although this project is not built for deployment, Of course this project will get more features added to it over time.it is a good example of how a website can be built with the framework. Feel free to look at the source code for this project on github and use the code for your own projects.
+#
+## Contribute
+#### If you would like to contribute to this project, feel free to do so.
+#
 
 ## Getting Started
 #### To get started, you will first of all need to have python installed on your computer. You can download python from [here](https://www.python.org/downloads/). You also need to have the python virtual environment installed. You can download the virtual environment from [here](https://virtualenv.pypa.io/en/latest/installation.html).  
