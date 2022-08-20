@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Hero, Skills, SiteSettings, Profile, Seo, Keywords
+
+from .models import Hero, Skills, SiteSettings, Profile, Seo, Keywords, IpLog
 
 
 # Register your models here.
@@ -32,3 +33,8 @@ class SeoAdmin(admin.ModelAdmin):
 @admin.register(Keywords)
 class KeywordAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'keyword',)
+
+
+@admin.register(IpLog)
+class VisitorsAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)

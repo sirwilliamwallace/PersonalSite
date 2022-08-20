@@ -38,6 +38,19 @@ class SiteSettings(models.Model):
         return f"Logo number {self.id}"
 
 
+class IpLog(models.Model):
+    visits_count = models.IntegerField(default=0, verbose_name="Count of Visitors")
+    ip_address = models.CharField(max_length=25, verbose_name="Visitor's Ip Address ")
+    authenticated_user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, verbose_name="User ")
+
+    def __str__(self):
+        return self.ip_address
+
+    class Meta:
+        verbose_name = "Logged ip"
+        verbose_name_plural = "Logged IP's"
+
+
 class Profile(models.Model):
     avatar = models.ImageField(verbose_name='Avatar ')
     name = models.CharField(max_length=100, verbose_name='Name ')
