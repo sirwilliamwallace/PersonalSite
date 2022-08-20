@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 
-from .models import Hero, SiteSettings, Profile, Seo
+from .models import Hero, SiteSettings, Profile, Seo, IpLog
+from tools.request_handler import get_client_ip
 
 
 # Create your views here.
@@ -12,6 +13,21 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data()
         context['settings'] = SiteSettings.objects.all().first()
+        # Count Visitors
+        request = self.request
+        ip_address = get_client_ip(request)
+        user_id = None
+        if request.user.is_authenticated:
+            user_id = request.user.id
+        visit: IpLog = IpLog.objects.filter(ip_address__iexact=ip_address).first()
+        if not visit:
+            visit = IpLog(
+                ip_address=ip_address,
+                authenticated_user_id=user_id,
+            )
+            visit.save(commit=False)
+        visit.visits_count += 1
+        visit.save()
         return context
 
 
