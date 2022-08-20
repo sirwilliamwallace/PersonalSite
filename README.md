@@ -64,7 +64,7 @@ python manage.py collectstatic
 ```bash
 python manage.py runserver
 ```
-### If everything is working properly, you should see the something similar to the following message :
+### If everything is working properly, you should see  something similar to the following message :
 ```bash
 Watching for file changes with StatReloader
 Performing system checks...
