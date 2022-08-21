@@ -171,5 +171,8 @@ EMAIL_HOST_USER = credentials.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = credentials.get('EMAIL_HOST_PASSWORD')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Login Url
+LOGIN_URL = 'account:login'
+
