@@ -6,11 +6,15 @@ from user_accounts.models import User
 from .forms import EditProfileModelForm, ChangePasswordForm
 from django.contrib.auth import logout
 from tools.send_email_tool import send_email
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+@method_decorator(login_required, name='dispatch')
 class DashboardView(TemplateView):
     template_name = "user_panel/dashboard.html"
 
 
+@method_decorator(login_required, name='dispatch')
 class EditProfileView(SuccessMessageMixin, View):
     def get(self, request):
         this_user_id = request.user.id
@@ -36,6 +40,8 @@ class EditProfileView(SuccessMessageMixin, View):
         }
         return render(request, 'user_panel/edit_info.html', context)
 
+
+@method_decorator(login_required, name='dispatch')
 class ChangePasswordView(View):
     
     def get(self, request):
@@ -70,5 +76,7 @@ class ChangePasswordView(View):
         }        
         return render(request, 'user_panel/change_password.html', context)
 
+
+@method_decorator(login_required, name='dispatch')
 class DashboardViewPartial(TemplateView):
     template_name = "user_panel/components/dashboard_component.html"
