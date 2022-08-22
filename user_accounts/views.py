@@ -96,7 +96,6 @@ class LogoutView(View):
 class ActivateView(View):
     def get(self, request, activation_code):
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
-        # print(user)
         if user is not None:
             if not user.is_active:
                 user.email_verification_code = get_random_string(72)
@@ -124,7 +123,6 @@ class ForgetPasswordView(View):
             user: User = User.objects.filter(username__iexact=user_name).first()
             if user is not None:
                 user_email = user.email
-                # print(user_email)
                 send_email('Password Recovery', user_email, context={'user': user},
                            template_name='mail_templates/forget_password.html')
                 messages.info(self.request, "PLease check your email")
@@ -135,7 +133,6 @@ class ForgetPasswordView(View):
 class ResetPasswordView(View):
     def get(self, request, activation_code):
         user: User = User.objects.filter(email_verification_code__iexact=activation_code).first()
-        # print(activation_code)
         if user is None:
             return redirect(reverse('account:login'))
         form = ResetPasswordForm()
@@ -167,4 +164,3 @@ class ResetPasswordView(View):
             return redirect(reverse('account:login'))
         context = {"form": form}
         return render(request, 'user_accounts/reset_password.html', context)
-# complete panel

@@ -39,7 +39,6 @@ class PostDetailView(DetailView):
             data = comment_form.data
             user_id = request.user.id
             parent_id = comment_form.cleaned_data.get('parentId')
-            # print(parent_id)
             comment_text = data.get('comment_text')
             PostComment(indicated_post_id=post_id, parent_id=parent_id, user_id=user_id,
                         comment_text=comment_text).save()

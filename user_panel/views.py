@@ -56,8 +56,7 @@ class ChangePasswordView(View):
         if change_password_form.is_valid():
             user = User.objects.filter(id=request.user.id).first()
             current_password = change_password_form.cleaned_data.get('current_password')
-            password = change_password_form.cleaned_data.get('password')
-            confirm_password = change_password_form.cleaned_data.get('confirm_password')
+            password = change_password_form.cleaned_data.get('confirm_password')
             if user.check_password(current_password):
                 user.set_password(password)
                 logout(request)
@@ -68,7 +67,7 @@ class ChangePasswordView(View):
                     context={'user': user},
                     template_name='mail_templates/password_changed.html'
                 )
-                return redirect(reverse('user_panel:change-password'))
+                return redirect(reverse('accounts:login'))
             else:
                 change_password_form.add_error('password', 'Password is not correct')
         context = {
